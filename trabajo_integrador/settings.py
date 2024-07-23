@@ -75,9 +75,13 @@ WSGI_APPLICATION = 'trabajo_integrador.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'catalogo_autos',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'USER': 'josuetb',
+        'PASSWORD': '1753'
+   }
 }
 
 
