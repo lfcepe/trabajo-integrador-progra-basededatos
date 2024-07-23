@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Inicio{% endblock %} 
+{% block content %}               
+    <h2>Bienvenido al Concesionario de Autos</h2>
+    <p>Aquí puedes encontrar una variedad de autos disponibles.</p>
+    <h3>Listado de Autos</h3>
+    <ul>
+        {% for auto in autos %}
+            <li><a href="{% url 'display_auto' auto.id %}">{{ auto.modelo }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
