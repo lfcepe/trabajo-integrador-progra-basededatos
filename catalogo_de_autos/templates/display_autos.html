@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ auto.modelo }}{% endblock title %} 
+{% block content %}               
+    <h2>{{ auto.modelo }}</h2>
+    <p>Has seleccionado un auto: <strong>{{ auto.modelo|capfirst }}</strong></p>
+    <h3>Características</h3>
+    <ul>
+        <li>Año: {{ auto.anioauto }}</li>
+        <li>Marca: {{ auto.marca }}</li>
+        <li>Tipo de Auto: {{ auto.tipodeauto }}</li>
+        <li>Color: {{ auto.color }}</li>
+        <li>Precio por Unidad: {{ auto.precioporunidad }}</li>
+        <li>Cantidad: {{ auto.cantidad }}</li>
+        <li>Estado: {{ auto.estado }}</li>
+        <li>Tipo de Combustible: {{ auto.tipocombustible }}</li>
+    </ul>
+{% endblock content %}
