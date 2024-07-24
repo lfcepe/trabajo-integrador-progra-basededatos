@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Clientes{% endblock %}
+{% block content %}
+    <h2>Clientes</h2>
+    <a href="{% url 'index' %}" class="btn btn-secondary mb-3">Volver a Inicio</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+               <th>Apellidos</th>
+                <th>Nombres</th>
+                <th>Cédula</th>
+                <th>Provincia</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Estado Cliente</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.apellidos }}</td>
+                    <td>{{ cliente.nombres }}</td>
+                    <td>{{ cliente.cedula }}</td>
+                    <td>{{ cliente.idprovincia }}</td>
+                    <td>{{ cliente.numerodetelefono }}</td>
+                    <td>{{ cliente.email }}</td>
+                    <td>{{ cliente.idestadocliente }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

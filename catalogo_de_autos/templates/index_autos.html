@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Autos{% endblock %}
+{% block content %}
+    <h2>Autos</h2>
+    <a href="{% url 'index' %}" class="btn btn-secondary mb-3">Volver a Inicio</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Marca</th>
+                <th>Tipo de Auto</th>
+                <th>Color</th>
+                <th>Modelo</th>
+                <th>Año</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Estado</th>
+                <th>Tipo de Combustible</th>
+                <th>Código Producto</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for auto in autos %}
+                <tr>
+                    <td>{{ auto.id }}</td>
+                    <td>{{ auto.idmarca }}</td>
+                    <td>{{ auto.idtipodeauto }}</td>
+                    <td>{{ auto.idcolor }}</td>
+                    <td>{{ auto.modelo }}</td>
+                    <td>{{ auto.anioauto }}</td>
+                    <td>{{ auto.precioporunidad }}</td>
+                    <td>{{ auto.cantidad }}</td>
+                    <td>{{ auto.idestado }}</td>
+                    <td>{{ auto.idtipocombustible }}</td>
+                    <td>{{ auto.codigoproducto }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

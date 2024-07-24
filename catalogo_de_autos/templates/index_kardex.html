@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Kardex{% endblock %}
+{% block content %}
+    <h2>Kardex</h2>
+    <a href="{% url 'index' %}" class="btn btn-secondary mb-3">Volver a Inicio</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Auto</th>
+                <th>Fecha Entrada</th>
+                <th>Cantidad Entrada</th>
+                <th>Valor Unitario Entrada</th>
+                <th>Valor Total Entrada</th>
+                <th>Cantidad Salida</th>
+                <th>Valor Unitario Salida</th>
+                <th>Valor Total Salida</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for kardex in kardex %}
+                <tr>
+                    <td>{{ kardex.id }}</td>
+                    <td>{{ kardex.idauto }}</td>
+                    <td>{{ kardex.fechacantidadentrada }}</td>
+                    <td>{{ kardex.cantidaddeentrada }}</td>
+                    <td>{{ kardex.valorunitarioentrada }}</td>
+                    <td>{{ kardex.valortotalentrada }}</td>

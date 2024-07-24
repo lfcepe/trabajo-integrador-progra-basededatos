@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Catalogos{% endblock %}
+{% block content %}
+    <h2>Catalogos</h2>
+    <a href="{% url 'index' %}" class="btn btn-secondary mb-3">Volver a Inicio</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Catalogo</th>
+                <th>Item</th>
+                <th>Valor</th>
+                <th>ID Raiz</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for catalogo in catalogos %}
+                <tr>
+                    <td>{{ catalogo.catalogo }}</td>
+                    <td>{{ catalogo.item }}</td>
+                    <td>{{ catalogo.valor }}</td>
+                    <td>{{ catalogo.idraiz }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
