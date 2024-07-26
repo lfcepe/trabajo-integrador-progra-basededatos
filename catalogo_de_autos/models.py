@@ -6,76 +6,127 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from djmoney.models.fields import MoneyField
 
+class Marca(models.Model):
+    marcaauto = models.CharField(max_length=50, null = False)
 
-class Autos(models.Model):
-    idmarca = models.ForeignKey('Catalogos', models.DO_NOTHING, db_column='idmarca')
-    idtipodeauto = models.ForeignKey('Catalogos', models.DO_NOTHING, db_column='idtipodeauto', related_name='autos_idtipodeauto_set')
-    idcolor = models.ForeignKey('Catalogos', models.DO_NOTHING, db_column='idcolor', related_name='autos_idcolor_set')
-    modelo = models.CharField()
-    anioauto = models.CharField(max_length=4)
-    precioporunidad = models.TextField()  # This field type is a guess.
-    cantidad = models.IntegerField(blank=True, null=True)
-    idestado = models.IntegerField()
-    idtipocombustible = models.ForeignKey('Catalogos', models.DO_NOTHING, db_column='idtipocombustible', related_name='autos_idtipocombustible_set')
-    codigoproducto = models.CharField(max_length=7)
+    def __str__(self) -> str:
+        return self.marcaauto
+    
+class Color_Auto(models.Model):
+    colorauto = models.CharField(max_length=50, null = False)
 
-    class Meta:
-        managed = False
-        db_table = 'autos'
+    def __str__(self):
+        return self.colorauto
+    
 
+class Tipo_Carro(models.Model):
+    modelocarro = models.CharField(max_length=50, null = False)
+    
+    def __str__(self) -> str:
+        return self.modelocarro
+    
+class Iva(models.Model):
+    porcentajeiva = models.CharField(max_length = 4, null = False)
+    valordecalculo = models.DecimalField(max_digits=2, decimal_places=2, null = False)
 
-class Catalogos(models.Model):
-    catalogo = models.CharField(max_length=50, blank=True, null=True)
-    item = models.CharField(max_length=50, blank=True, null=True)
-    valor = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
-    idraiz = models.IntegerField(blank=True, null=True)
+    def __str__(self):
+        return self.porcentajeiva
+    
 
-    class Meta:
-        managed = False
-        db_table = 'catalogos'
+class Forma_Pago(models.Model):
+    formadepago = models.CharField(max_length=50, null = False)
 
+    def __str__(self):
+        return self.formadepago
+    
 
-class Clientes(models.Model):
-    apellidos = models.CharField(max_length=20)
-    nombres = models.CharField(max_length=20)
-    cedula = models.CharField(max_length=10)
-    idprovincia = models.ForeignKey(Catalogos, models.DO_NOTHING, db_column='idprovincia')
-    numerodetelefono = models.CharField(max_length=10)
-    email = models.CharField(max_length=80)
-    idestadocliente = models.ForeignKey(Catalogos, models.DO_NOTHING, db_column='idestadocliente', related_name='clientes_idestadocliente_set')
+class Cliente(models.Model):
+    apellidos = models.CharField(max_length=20, null=False)
+    nombres = models.CharField(max_length=20, null=False)
+    cedula = models.CharField(max_length=10, null=False)
+    provincia = models.CharField(null=False)
+    PROVINCIA= {
+        ('AZUAY'),
+	    ('BOLIVAR'),
+		('CAÑAR'),
+		('CARCHI'),
+		('COTOPAXI'),
+		('CHIMBORAZO'),
+	    ('EL ORO'),
+		('ESMERALDAS'),
+		('GUAYAS'),
+		('IMBABURA'),
+		('LOJA'),
+		('LOS RIOS'),
+		('MANABI'),
+		('MORONA SANTIAGO'),
+		('NAPO'),
+		('PASTAZA'),
+		('PICHINCHA'),
+		('TUNGURAHUA'),
+		('ZAMORA CHINCHIPE'),
+		('GALAPAGOS'),
+		('SUCUMBIOS'),
+		('ORELLANA'),
+		('SANTO DOMINGO DE LOS TSACHILAS'),
+		('SANTA ELENA'),
+    }
+    numerodetelefono = models.CharField(max_length=10, null = False)
+    email = models.CharField(max_length=80, null = False)
+    estadocliente = models.CharField(default='ACTIVO', null = False)
+    ESTADO_CLIENTE = {
+        ('ACTIVO'),
+        ('INACTIVO'),
+    }
 
-    class Meta:
-        managed = False
-        db_table = 'clientes'
+    def __str__(self):
+        return f'{self.apellidos} {self.nombres}'
+    
 
+class Auto(models.Model):
+    marca = models.ForeignKey(Marca,on_delete=models.CASCADE)
+    tipodeauto = models.ForeignKey(Tipo_Carro, on_delete=models.CASCADE)
+    color = models.ForeignKey(Color_Auto, on_delete=models.CASCADE)
+    modelo = models.CharField(null = False)
+    anioauto = models.CharField(max_length=4, null = False)
+    precioporunidad = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', null = False)
+    cantidad = models.IntegerField(null=True)
+    estado = models.CharField(default="SIN STOCK", max_length=50, null=False)
+    tipocombustible = models.CharField(max_length=50, null=False)
+    COMBUSTIBLE = {
+        ('DIESEL'),
+        ('SUPER/EXTRA'),
+    }
+    codigoproducto = models.CharField(max_length=7, null=False)
+
+    def __str__(self):
+        return f'{self.marca} {self.modelo} {self.tipodeauto}'
+        
 
 class Kardex(models.Model):
-    idauto = models.ForeignKey(Autos, models.DO_NOTHING, db_column='idauto')
-    fechacantidadentrada = models.DateField()
-    cantidaddeentrada = models.IntegerField()
-    valorunitarioentrada = models.TextField()  # This field type is a guess.
-    valortotalentrada = models.TextField()  # This field type is a guess.
-    cantidadsalida = models.IntegerField(blank=True, null=True)
-    valorunitariodesalida = models.TextField(blank=True, null=True)  # This field type is a guess.
-    valortotaldesalida = models.TextField(blank=True, null=True)  # This field type is a guess.
+    auto = models.ForeignKey(Auto, on_delete=models.CASCADE)
+    fechacantidadentrada = models.DateField(null = False)
+    cantidaddeentrada = models.IntegerField(null = False)
+    valorunitarioentrada = MoneyField (max_digits=14, decimal_places=2, default_currency='USD', null = False)
+    valortotalentrada = MoneyField (max_digits=14, decimal_places=2, default_currency='USD', null = False)
+    fechacantidaddesalidad = models.DateField(null = True)
+    cantidadsalida = models.IntegerField(null=True)
+    valorunitariodesalida = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',null=True)  
+    valortotaldesalida = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',null=True) 
 
-    class Meta:
-        managed = False
-        db_table = 'kardex'
-
+    def __str__(self):
+        return self.auto
+     
 
 class Ventas(models.Model):
-    idcliente = models.ForeignKey(Clientes, models.DO_NOTHING, db_column='idcliente')
-    idauto = models.ForeignKey(Autos, models.DO_NOTHING, db_column='idauto')
-    fechacompra = models.DateField()
-    idformadepago = models.ForeignKey(Catalogos, models.DO_NOTHING, db_column='idformadepago')
-    cantidaddeventa = models.IntegerField()
-    valordelauto = models.TextField()  # This field type is a guess.
-    idiva = models.ForeignKey(Catalogos, models.DO_NOTHING, db_column='idiva', related_name='ventas_idiva_set')
-    valortotalapagar = models.TextField(blank=True, null=True)  # This field type is a guess.
-    codigoventa = models.CharField(max_length=7)
-
-    class Meta:
-        managed = False
-        db_table = 'ventas'
+    cliente = models.ForeignKey(Cliente,on_delete='CASCADE')
+    auto = models.ForeignKey(Auto,on_delete='CASCADE')
+    fechacompra = models.DateField(null = False)
+    formadepago = models.ForeignKey(Forma_Pago, on_delete='CASCADE')
+    cantidaddeventa = models.IntegerField(null = False)
+    valordelauto = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',null= False) 
+    iva = models.ForeignKey(Iva,on_delete='CASCADE')
+    valortotalapagar = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',null= False) 
+    codigoventa = models.CharField(max_length=7, null = False)
