@@ -1,76 +1,52 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import redirect, render
-from .models import Catalogos, Clientes, Autos, Kardex, Ventas
+from .models import Marca, Color_Auto, Tipo_Carro, Iva, Forma_Pago, Cliente, Auto, Kardex, Ventas
 # Create your views here.
 
 def index (request):
     template = loader.get_template('index.html')
     return HttpResponse(template.render(request))
 
-def index_catalogo(request):
-    catalogos = Catalogos.objects.order_by('catalogo')
-    template = loader.get_template('index_catalogos.html')
-    return HttpResponse(template.render({'catalogos': catalogos}, request))
+def index_categoria(request):
+    template = loader.get_template('index_categorias.html')
+    return HttpResponse(template.render(request))
 
-def catalogo(request, catalogo_id):
-    catalogo = Catalogos.objects.get(pk = catalogo_id) 
-    nombrecatalogo = Catalogos.objects.get(catalogo = catalogo)
-    template = loader.get_template('display_catalogos.html')
+def categoria(request, marca_id, colorauto_id, tipocarro_id, iva_id, formapago_id):
+    marca = Marca.objects.get(pk = marca_id)
+    colorauto = Color_Auto.objects.get(pk = colorauto_id)
+    tipocarro = Tipo_Carro.objects.get(pk = tipocarro_id)
+    iva = Iva.objects.get(pk = iva_id)
+    formapago = Forma_Pago.objects.get(pk = formapago_id)
+    template = loader.get_template('display_categoria.html')
     context = {
-        'catalogo': catalogo,
-        'nombrecatalogo': nombrecatalogo
+        'marca': marca,
+        'colorauto': colorauto,
+        'tipocarro': tipocarro,
+        'iva': iva,
+        'formapago': formapago
     }
     return HttpResponse(template.render(context, request))
 
-def index_cliente(request):
-    clientes = Clientes.objects.order_by('apellidos')
-    template = loader.get_template('index_clientes.html')
+def display_cliente(request):
+    clientes = Cliente.objects.order_by('apellidos')
+    template = loader.get_template('display_clientes.html')
     return HttpResponse(template.render({'clientes': clientes}, request))
 
-def cliente (request, cliente_id):
-    cliente = Clientes.objects.get(pk = cliente_id)
-    template = loader.get_template('display_clientes.html')
-    context = {
-        'cliente': cliente
-    }
-    return HttpResponse(template.render(context, request))
 
-def index_autos(request):
-    autos = Autos.objects.order_by('modelo')
-    template = loader.get_template('index_autos.html')
+def display_autos(request):
+    autos = Auto.objects.order_by('tipodeauto')
+    template = loader.get_template('display_autos.html')
     return HttpResponse(template.render({'autos': autos}, request))
 
-def auto (request, auto_id):
-    auto = Autos.objects.get(pk = auto_id)
-    template = loader.get_template('display_autos.html')
-    context = {
-        'auto': auto
-    }
-    return HttpResponse(template.render(context, request))
 
-def index_kardex(request):
-    kardex = Catalogos.objects.order_by('id_auto')
-    template = loader.get_template('index_kardex.html')
-    return HttpResponse(template.render({'kardex': kardex}, request))
-
-def kardex (request, kardex_id):
-    kardex = Kardex.objects.get(pk = kardex_id)
+def display_kardex(request):
+    kardexs = Kardex.objects.order_by('fechacantidadentrada')
     template = loader.get_template('display_kardex.html')
-    context = {
-        'kardex': kardex
-    }
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render({'kardexs': kardexs}, request))
 
-def index_ventas(request):
-    ventas = Catalogos.objects.order_by('valortotalapagar')
-    template = loader.get_template('index_ventas.html')
+
+def display_ventas(request):
+    ventas = Ventas.objects.order_by('fechacompra')
+    template = loader.get_template('display_ventas.html')
     return HttpResponse(template.render({'ventas': ventas}, request))
-
-def venta (request, venta_id):
-    venta = Kardex.objects.get(pk = venta_id)
-    template = loader.get_template('display_venta.html')
-    context = {
-        'venta': venta
-    }
-    return HttpResponse(template.render(context, request))
