@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Categorias{% endblock %} 
+{% block content %}      
+    <h2>Categorias</h2>
+    <a href="{% url 'index' %}" class="btn btn-secondary mb-3">Volver al Inicio</a>
+    <div class="card-group">
+        <div class="card">
+            <div class="card-body">
+                <h4>Marca de autos</h4>
+                <a href="" class="btn btn-primary"> Detalle de las marcas</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4>Color de los autos</h4>
+                <a href="" class="btn btn-primary"> Detalles de los colores</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4>Tipo de autos</h4>
+                <a href="" class="btn btn-primary"> Detalles de los tipos de autos</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4>Iva</h4>
+                <a href="" class="btn btn-primary"> Iva</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4>Forma de pago</h4>
+                <a href="" class="btn btn-primary"> Detalles de las formas de pago </a>
+            </div>
+        </div>
+{% endblock %}
