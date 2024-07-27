@@ -26,16 +26,25 @@ def display_iva(request):
     
 def display_formapago(request):
 
+
+
 def display_cliente(request):
-    clientes = Cliente.objects.order_by('apellidos')
-    template = loader.get_template('display_clientes.html')
-    return HttpResponse(template.render({'clientes': clientes}, request))
+    clientes = Cliente.objects.order_by('apellido')
+    templade = loader.get_templade('display_clientes.html')
+    return HttpResponse(templade.render({'clientes': clientes}), request)
 
+def index_autos(request):
+    auto = Auto.objects.order_by('modelo')
+    template = loader.get_template('index_autos.html')
+    return HttpResponse(template.render({'auto': auto}, request))
 
-def display_autos(request):
-    autos = Auto.objects.order_by('tipodeauto')
+def display_autos(request, autos_id):
+    autos = Auto.objects.get(pk= autos_id)
     template = loader.get_template('display_autos.html')
-    return HttpResponse(template.render({'autos': autos}, request))
+    context = {
+        'autos': autos
+    }
+    return HttpResponse(template.render(context, request))
 
 
 def display_kardex(request):
