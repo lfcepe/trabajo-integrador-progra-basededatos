@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import redirect, render
-from .models import Marca, Color_Auto, Tipo_Carro, Iva, Forma_Pago, Cliente, Auto, Kardex, Ventas
+from .models import Marca, ColorAuto, TipoCarro, Iva, FormaPago, Cliente, Auto, Kardex, Venta
 # Create your views here.
 
 def index (request):
@@ -12,21 +12,19 @@ def index_categoria(request):
     template = loader.get_template('index_categorias.html')
     return HttpResponse(template.render(request))
 
-def categoria(request, marca_id, colorauto_id, tipocarro_id, iva_id, formapago_id):
-    marca = Marca.objects.get(pk = marca_id)
-    colorauto = Color_Auto.objects.get(pk = colorauto_id)
-    tipocarro = Tipo_Carro.objects.get(pk = tipocarro_id)
-    iva = Iva.objects.get(pk = iva_id)
-    formapago = Forma_Pago.objects.get(pk = formapago_id)
+def display_categoria(request):
     template = loader.get_template('display_categoria.html')
-    context = {
-        'marca': marca,
-        'colorauto': colorauto,
-        'tipocarro': tipocarro,
-        'iva': iva,
-        'formapago': formapago
-    }
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(request))
+
+def display_marca(request):
+    
+def display_colorauto(request):
+    
+def display_tipocarro(request):
+
+def display_iva(request):
+    
+def display_formapago(request):
 
 def display_cliente(request):
     clientes = Cliente.objects.order_by('apellidos')
@@ -47,6 +45,6 @@ def display_kardex(request):
 
 
 def display_ventas(request):
-    ventas = Ventas.objects.order_by('fechacompra')
+    ventas = Venta.objects.order_by('fechacompra')
     template = loader.get_template('display_ventas.html')
     return HttpResponse(template.render({'ventas': ventas}, request))

@@ -7,14 +7,14 @@ class Marca(models.Model):
     def __str__(self) -> str:
         return self.marcaauto
     
-class Color_Auto(models.Model):
+class ColorAuto(models.Model):
     colorauto = models.CharField(max_length=50, null = False)
 
     def __str__(self):
         return self.colorauto
     
 
-class Tipo_Carro(models.Model):
+class TipoCarro(models.Model):
     modelocarro = models.CharField(max_length=50, null = False)
     
     def __str__(self) -> str:
@@ -28,7 +28,7 @@ class Iva(models.Model):
         return self.porcentajeiva
     
 
-class Forma_Pago(models.Model):
+class FormaPago(models.Model):
     formadepago = models.CharField(max_length=50, null = False)
 
     def __str__(self):
@@ -80,8 +80,8 @@ class Cliente(models.Model):
 
 class Auto(models.Model):
     marca = models.ForeignKey(Marca,on_delete=models.CASCADE)
-    tipodeauto = models.ForeignKey(Tipo_Carro, on_delete=models.CASCADE)
-    color = models.ForeignKey(Color_Auto, on_delete=models.CASCADE)
+    tipodeauto = models.ForeignKey(TipoCarro, on_delete=models.CASCADE)
+    color = models.ForeignKey(ColorAuto, on_delete=models.CASCADE)
     modelo = models.CharField(null = False)
     anioauto = models.CharField(max_length=4, null = False)
     precioporunidad = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', null = False)
@@ -113,11 +113,11 @@ class Kardex(models.Model):
         return self.auto
      
 
-class Ventas(models.Model):
+class Venta(models.Model):
     cliente = models.ForeignKey(Cliente,on_delete='CASCADE')
     auto = models.ForeignKey(Auto,on_delete='CASCADE')
     fechacompra = models.DateField(null = False)
-    formadepago = models.ForeignKey(Forma_Pago, on_delete='CASCADE')
+    formadepago = models.ForeignKey(FormaPago, on_delete='CASCADE')
     cantidaddeventa = models.IntegerField(null = False)
     valordelauto = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',null= False) 
     iva = models.ForeignKey(Iva,on_delete='CASCADE')
