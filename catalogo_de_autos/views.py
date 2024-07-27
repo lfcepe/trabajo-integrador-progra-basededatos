@@ -17,15 +17,24 @@ def display_categoria(request):
     return HttpResponse(template.render(request))
 
 def display_marca(request):
-    
+    template = loader.get_template('display_marca.html')
+    return HttpResponse(template.render(request))
+
 def display_colorauto(request):
+    template = loader.get_template('display_colorauto.html')
+    return HttpResponse(template.render(request))
     
 def display_tipocarro(request):
+    template = loader.get_template('display_tipocarro.html')
+    return HttpResponse(template.render(request))
 
 def display_iva(request):
+    template = loader.get_template('display_iva.html')
+    return HttpResponse(template.render(request))
     
 def display_formapago(request):
-
+    template = loader.get_template('display_formapago.html')
+    return HttpResponse(template.render(request))
 
 
 def display_cliente(request):
