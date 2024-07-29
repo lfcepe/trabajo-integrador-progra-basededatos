@@ -3,10 +3,11 @@
 {% block content %}
     <h2>Clientes</h2>
     <a href="{% url 'index' %}" class="btn btn-secondary mb-3">Volver a Inicio</a>
+    <a href="{% url 'catalogo_de_autos:add_cliente' %}" class="btn btn-primary mb-3">Agregar cliente</a>
     <table class="table table-bordered">
         <thead>
             <tr>
-               <th>Apellidos</th>
+                <th>Apellidos</th>
                 <th>Nombres</th>
                 <th>Cédula</th>
                 <th>Provincia</th>
@@ -21,10 +22,10 @@
                     <td>{{ cliente.apellidos }}</td>
                     <td>{{ cliente.nombres }}</td>
                     <td>{{ cliente.cedula }}</td>
-                    <td>{{ cliente.idprovincia }}</td>
+                    <td>{{ cliente.provincia }}</td>
                     <td>{{ cliente.numerodetelefono }}</td>
                     <td>{{ cliente.email }}</td>
-                    <td>{{ cliente.idestadocliente }}</td>
+                    <td>{{ cliente.estadocliente }}</td>
                 </tr>
             {% endfor %}
         </tbody>
