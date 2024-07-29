@@ -1,10 +1,11 @@
 from django.http import HttpResponse
 from django.template import loader
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from .models import Marca, ColorAuto, TipoCarro, Iva, FormaPago, Cliente, Auto, Kardex, Venta
+
 # Create your views here.
 
-def index (request):
+def index(request):
     template = loader.get_template('index.html')
     return HttpResponse(template.render(request))
 
@@ -55,6 +56,7 @@ def display_formapago(request):
     template = loader.get_template('display_formapago.html')
     return HttpResponse(template.render({'pagos': pagos})(request))
 
+
 def obtener_formadepago(formadepago_id):
     pago = FormaPago.objects.get(pk = formadepago_id)
     return {'pago': pago}
@@ -65,23 +67,23 @@ def display_cliente(request):
     return HttpResponse(templade.render({'clientes': clientes}), request)
 
 def index_autos(request):
-    auto = Auto.objects.order_by('modelo')
+    autos = Auto.objects.order_by('modelo')
     template = loader.get_template('index_autos.html')
-    return HttpResponse(template.render({'auto': auto}, request))
+    return HttpResponse(template.render({'autos': autos}, request))
 
 def display_autos(request, autos_id):
-    autos = Auto.objects.get(pk= autos_id)
+    auto = get_object_or_404(Auto, pk=autos_id)
     template = loader.get_template('display_autos.html')
     context = {
-        'autos': autos
+        'auto': auto
     }
     return HttpResponse(template.render(context, request))
-
 
 def display_kardex(request):
     kardexs = Kardex.objects.order_by('fechacantidadentrada')
     template = loader.get_template('display_kardex.html')
     return HttpResponse(template.render({'kardexs': kardexs}, request))
+
 
 def obtener_kardex(kardex_id):
     kardex = Kardex.objects.get(pk = kardex_id)
@@ -91,3 +93,21 @@ def display_ventas(request):
     ventas = Venta.objects.order_by('fechacompra')
     template = loader.get_template('display_ventas.html')
     return HttpResponse(template.render({'ventas': ventas}, request))
+
+def detalle_venta(request, venta_id):
+    # Obtener la venta específica por su ID
+    venta = get_object_or_404(Venta, pk=venta_id)
+    
+    # Calcular el valor total a pagar (asumiendo que IVA es un porcentaje)
+    iva_porcentaje = venta.iva  # Si `iva` es un campo con porcentaje
+    valor_auto = venta.valordelauto
+    valortotalapagar = valor_auto + (valor_auto * iva_porcentaje / 100)
+    
+    # Preparar el contexto para la plantilla
+    context = {
+        'venta': venta,
+        'valortotalapagar': valortotalapagar,
+    }
+    
+    # Renderizar la plantilla con el contexto
+    return render(request, 'detalle_venta.html', context)

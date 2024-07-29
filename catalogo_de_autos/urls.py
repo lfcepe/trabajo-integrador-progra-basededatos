@@ -16,4 +16,5 @@ urlpatterns = [
     path("display_autos/< int:id >/", views.display_autos, name="display_autos"),
     path("", views.display_kardex, name="display_kardex"),
     path("", views.display_ventas, name="display_ventas"),
+    path('venta/<int:venta_id>/', detalle_venta, name='detalle_venta'),
 ]

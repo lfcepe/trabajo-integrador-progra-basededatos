@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Ventas{% endblock %}
+{% block content %}
+    <h2>Ventas</h2>
+    <a href="{% url 'index' %}" class="btn btn-secondary mb-3">Volver a Inicio</a>
+    <a href="{% url 'catalogo_de_autos:add_venta' %}" class="btn btn-primary mb-3">Agregar venta</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Auto</th>
+                <th>Fecha de Compra</th>
+                <th>Forma de Pago</th>
+                <th>Cantidad de Venta</th>
+                <th>Valor del Auto</th>
+                <th>IVA</th>
+                <th>Valor Total a Pagar</th>
+                <th>Código de Venta</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for venta in ventas %}
+                <tr>
+                    <td>{{ venta.cliente }}</td>
+                    <td>{{ venta.auto }}</td>
+                    <td>{{ venta.fechacompra }}</td>
+                    <td>{{ venta.formadepago }}</td>
+                    <td>{{ venta.cantidaddeventa }}</td>
+                    <td>{{ venta.valordelauto }}</td>
+                    <td>{{ venta.iva }}</td>
+                    <td>{{ venta.valortotalapagar }}</td>
+                    <td>{{ venta.codigoventa }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
