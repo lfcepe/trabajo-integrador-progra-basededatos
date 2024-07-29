@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Tipos de Autos{% endblock %} 
+{% block content %}      
+    <p>Tipos de vehiculos que disponemos:</p>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Tipo de Auto</th>
+          </tr>
+        </thead>
+            {% for tipo in tipos %}
+                <tbody>
+                <tr>
+                    <th>{{ tipo.id }}</th>
+                    <td>{{ tipo }}</td>
+                </tr>
+                </tbody>
+            {% endfor %}
+      </table>
+{% endblock %}

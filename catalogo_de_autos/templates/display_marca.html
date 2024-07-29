@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Marcas de Autos{% endblock %} 
+{% block content %}      
+    <p>Marcas de autos que disponemos:</p>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Marca</th>
+          </tr>
+        </thead>
+            {% for marca in marcas %}
+                <tbody>
+                <tr>
+                    <th>{{ marca.id }}</th>
+                    <td>{{ marca }}</td>
+                </tr>
+                </tbody>
+            {% endfor %}
+      </table>
+{% endblock %}

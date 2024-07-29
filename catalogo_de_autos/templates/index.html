@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-body">
                 <h4>Categorias</h4>
-                <a href="index_categorias" class="btn btn-primary"> Detalles Categorias</a>
+                <a href="{% url "catalogo_de_autos: display_categorias" %}" class="btn btn-primary"> Detalles Categorias</a>
             </div>
         </div>
         <div class="card">
@@ -20,19 +20,19 @@
         <div class="card">
             <div class="card-body">
                 <h4>Autos</h4>
-                <a href="display_autos" class="btn btn-primary"> Detalles de Autos</a>
+                <a href="{% url "catalogo_de_autos: index_autos" %}" class="btn btn-primary"> Detalles de Autos</a>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
                 <h4>Kardex</h4>
-                <a href="display_kardex" class="btn btn-primary"> Detalles de Kardex</a>
+                <a href="{% url "catalogo_de_autos: display_kardex" %}" class="btn btn-primary"> Detalles de Kardex</a>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
                 <h4>Ventas</h4>
-                <a href="display_ventas" class="btn btn-primary"> Detalles de Ventas</a>
+                <a href="{% url "catalogo_de_autos: display_ventas" %}" class="btn btn-primary"> Detalles de Ventas</a>
             </div>
         </div>
     </div> 

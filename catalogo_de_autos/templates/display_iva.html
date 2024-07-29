@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Porcentajes de IVA{% endblock %} 
+{% block content %}      
+    <p>Porcetajes de IVA que disponemos:</p>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">IVA</th>
+            <th scope="col">Valor en decimal</th>
+          </tr>
+        </thead>
+            {% for iva in piva %}
+                <tbody>
+                <tr>
+                    <th>{{ iva.id }}</th>
+                    <td>{{ iva }}</td>
+                    <td>{{ iva.valordecalculo }}</td>
+                </tr>
+                </tbody>
+            {% endfor %}
+      </table>
+{% endblock %}

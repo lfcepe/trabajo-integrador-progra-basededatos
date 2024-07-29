@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Colores Autos{% endblock %} 
+{% block content %}      
+    <p>Colores de los autos</p>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Colores</th>
+          </tr>
+        </thead>
+            {% for color in colores%}
+                <tbody>
+                <tr>
+                    <th>{{ color.id }}</th>
+                    <td>{{ color }}</td>
+                </tr>
+                </tbody>
+            {% endfor %}
+      </table>
+{% endblock %}

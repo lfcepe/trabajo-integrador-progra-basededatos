@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Kardex{% endblock %} 
+{% block content %}      
+    <p>Kardex de vehiculos</p>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+            {% for kardex in kardexs %}
+                <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            {% endfor %}
+      </table>
+{% endblock %}
