@@ -39,8 +39,7 @@ class Cliente(models.Model):
     apellidos = models.CharField(max_length=20, null=False)
     nombres = models.CharField(max_length=20, null=False)
     cedula = models.CharField(max_length=10, null=False)
-    provincia = models.CharField(null=False)
-    PROVINCIA= {
+    PROVINCIAS= {
         ('AZUAY'),
 	    ('BOLIVAR'),
 		('CAÑAR'),
@@ -66,36 +65,37 @@ class Cliente(models.Model):
 		('SANTO DOMINGO DE LOS TSACHILAS'),
 		('SANTA ELENA'),
     }
+    provincia = models.CharField(max_length=30 , choices= PROVINCIAS, null=False)
     numerodetelefono = models.CharField(max_length=10, null = False)
     email = models.CharField(max_length=80, null = False)
-    estadocliente = models.CharField(default='ACTIVO', null = False)
     ESTADO_CLIENTE = {
         ('ACTIVO'),
         ('INACTIVO'),
     }
+    estadocliente = models.CharField(max_length= 40, choices= ESTADO_CLIENTE, default='ACTIVO', null = False)
 
     def __str__(self):
         return f'{self.apellidos} {self.nombres}'
     
 
 class Auto(models.Model):
-    marca = models.ForeignKey(Marca,on_delete=models.CASCADE)
+    marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
     tipodeauto = models.ForeignKey(TipoCarro, on_delete=models.CASCADE)
     color = models.ForeignKey(ColorAuto, on_delete=models.CASCADE)
     modelo = models.CharField(null = False)
     anioauto = models.CharField(max_length=4, null = False)
     precioporunidad = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', null = False)
     cantidad = models.IntegerField(null=True)
-    estado = models.CharField(default="SIN STOCK", max_length=50, null=False)
-    ESTADOPRODUCTO = {
+    ESTADO_PRODUCTO = {
         ('EN STOCK'),
         ('SIN STOCK')
     }
-    tipocombustible = models.CharField(max_length=50, null=False)
+    estado = models.CharField(max_length= 50, choices= ESTADO_PRODUCTO,default="SIN STOCK", max_length=50, null=False)
     COMBUSTIBLE = {
         ('DIESEL'),
         ('SUPER/EXTRA'),
     }
+    tipocombustible = models.CharField(max_length=50, choices= COMBUSTIBLE, null=False)
     codigoproducto = models.CharField(max_length=7, null=False)
     imagencarro = models.ImageField(upload_to='imagenes_autos')
 
