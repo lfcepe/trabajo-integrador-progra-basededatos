@@ -87,6 +87,10 @@ class Auto(models.Model):
     precioporunidad = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', null = False)
     cantidad = models.IntegerField(null=True)
     estado = models.CharField(default="SIN STOCK", max_length=50, null=False)
+    ESTADOPRODUCTO = {
+        ('EN STOCK'),
+        ('SIN STOCK')
+    }
     tipocombustible = models.CharField(max_length=50, null=False)
     COMBUSTIBLE = {
         ('DIESEL'),
