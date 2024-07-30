@@ -93,6 +93,7 @@ class Auto(models.Model):
         ('SUPER/EXTRA'),
     }
     codigoproducto = models.CharField(max_length=7, null=False)
+    imagencarro = models.ImageField(upload_to='imagenes_autos')
 
     def __str__(self):
         return f'{self.marca} {self.modelo} {self.tipodeauto}'

@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for kardex in kardex %}
+            {% for kardex in kardexs %}
                 <tr>
                     <td>{{ kardex.id }}</td>
                     <td>{{ kardex.idauto }}</td>
@@ -26,3 +26,6 @@
                     <td>{{ kardex.cantidaddeentrada }}</td>
                     <td>{{ kardex.valorunitarioentrada }}</td>
                     <td>{{ kardex.valortotalentrada }}</td>
+            {% endfor %}
+        </tbody>
+{% endblock content %}

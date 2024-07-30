@@ -10,17 +10,17 @@
             <img src="{{% "logodeautos.jpg" %}}" alt="" width="100%" height="100%">
             <div class="card-body">
                 <h5 class="card-title">{{ auto.modelo }}</h5>
-                <p class="card-text">Marca: {{ auto.marca.marcaauto }}</p>
+                <p class="card-text">Marca: {{ auto.marca }}</p>
+                <p class="card-text">Color: {{ auto.color }}</p>
                 <p class="card-text">Año: {{ auto.anioauto }}</p>
-                <p class="card-text">Precio: {{ auto.precioporunidad }}</p>
                 
-                <a href="auto/{{auto.pk }}" class="btn btn-primary">
+                <a href="auto/{{ auto.id }}" class="btn btn-primary">
                     <i class="fa-solid fa-eye"></i>
                 </a>
-                <a href="edit_auto/{{auto.pk }}" class="btn btn-primary">
+                <a href="edit_auto/{{ auto.id }}" class="btn btn-primary">
                     <i class="fa-solid fa-pencil"></i>
                 </a>
-                <a href="delete_auto/{{auto.pk }}" class="btn btn-danger">
+                <a href="delete_auto/{{ auto.id }}" class="btn btn-danger">
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </div>

@@ -79,9 +79,9 @@ def display_autos(request, autos_id):
     }
     return HttpResponse(template.render(context, request))
 
-def display_kardex(request):
+def index_kardex(request):
     kardexs = Kardex.objects.order_by('fechacantidadentrada')
-    template = loader.get_template('display_kardex.html')
+    template = loader.get_template('index_kardex.html')
     return HttpResponse(template.render({'kardexs': kardexs}, request))
 
 
