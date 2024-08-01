@@ -90,7 +90,7 @@ class Auto(models.Model):
         ('EN STOCK'),
         ('SIN STOCK')
     }
-    estado = models.CharField(max_length= 50, choices= ESTADO_PRODUCTO,default="SIN STOCK", max_length=50, null=False)
+    estado = models.CharField(max_length= 50, choices= ESTADO_PRODUCTO,default="SIN STOCK", null=False)
     COMBUSTIBLE = {
         ('DIESEL'),
         ('SUPER/EXTRA'),
@@ -119,12 +119,12 @@ class Kardex(models.Model):
      
 
 class Venta(models.Model):
-    cliente = models.ForeignKey(Cliente,on_delete='CASCADE')
-    auto = models.ForeignKey(Auto,on_delete='CASCADE')
+    cliente = models.ForeignKey(Cliente, on_delete='CASCADE')
+    auto = models.ForeignKey(Auto, on_delete='CASCADE')
     fechacompra = models.DateField(null = False)
     formadepago = models.ForeignKey(FormaPago, on_delete='CASCADE')
     cantidaddeventa = models.IntegerField(null = False)
     valordelauto = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',null= False) 
-    iva = models.ForeignKey(Iva,on_delete='CASCADE')
+    iva = models.ForeignKey(Iva, on_delete='CASCADE')
     valortotalapagar = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',null= False) 
     codigoventa = models.CharField(max_length=7, null = False)
