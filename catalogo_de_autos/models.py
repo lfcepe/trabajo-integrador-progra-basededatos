@@ -40,37 +40,37 @@ class Cliente(models.Model):
     nombres = models.CharField(max_length=20, null=False)
     cedula = models.CharField(max_length=10, null=False)
     PROVINCIAS= {
-        ('AZUAY'),
-	    ('BOLIVAR'),
-		('CAÑAR'),
-		('CARCHI'),
-		('COTOPAXI'),
-		('CHIMBORAZO'),
-	    ('EL ORO'),
-		('ESMERALDAS'),
-		('GUAYAS'),
-		('IMBABURA'),
-		('LOJA'),
-		('LOS RIOS'),
-		('MANABI'),
-		('MORONA SANTIAGO'),
-		('NAPO'),
-		('PASTAZA'),
-		('PICHINCHA'),
-		('TUNGURAHUA'),
-		('ZAMORA CHINCHIPE'),
-		('GALAPAGOS'),
-		('SUCUMBIOS'),
-		('ORELLANA'),
-		('SANTO DOMINGO DE LOS TSACHILAS'),
-		('SANTA ELENA'),
+        ('AZ', 'AZUAY'),
+	    ('BO', 'BOLIVAR'),
+		('CÑ', 'CAÑAR'),
+		('CA', 'CARCHI'),
+		('CP', 'COTOPAXI'),
+		('CB', 'CHIMBORAZO'),
+	    ('EO', 'EL ORO'),
+		('ES', 'ESMERALDAS'),
+		('GY', 'GUAYAS'),
+		('IB', 'IMBABURA'),
+		('LJ', 'LOJA'),
+		('LR', 'LOS RIOS'),
+		('MN', 'MANABI'),
+		('MS', 'MORONA SANTIAGO'),
+		('NP', 'NAPO'),
+		('PZ', 'PASTAZA'),
+		('PC', 'PICHINCHA'),
+		('TU', 'TUNGURAHUA'),
+		('ZC', 'ZAMORA CHINCHIPE'),
+		('GG', 'GALAPAGOS'),
+		('SB', 'SUCUMBIOS'),
+		('OR', 'ORELLANA'),
+		('SD', 'SANTO DOMINGO DE LOS TSACHILAS'),
+		('SE', 'SANTA ELENA'),
     }
     provincia = models.CharField(max_length=30 , choices= PROVINCIAS, null=False)
     numerodetelefono = models.CharField(max_length=10, null = False)
     email = models.CharField(max_length=80, null = False)
     ESTADO_CLIENTE = {
-        ('ACTIVO'),
-        ('INACTIVO'),
+        ('AC', 'ACTIVO'),
+        ('INAC', 'INACTIVO'),
     }
     estadocliente = models.CharField(max_length= 40, choices= ESTADO_CLIENTE, default='ACTIVO', null = False)
 
@@ -87,13 +87,13 @@ class Auto(models.Model):
     precioporunidad = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', null = False)
     cantidad = models.IntegerField(null=True)
     ESTADO_PRODUCTO = {
-        ('EN STOCK'),
-        ('SIN STOCK')
+        ('SCK','EN STOCK'),
+        ('SSCK', 'SIN STOCK')
     }
     estado = models.CharField(max_length= 50, choices= ESTADO_PRODUCTO,default="SIN STOCK", null=False)
     COMBUSTIBLE = {
-        ('DIESEL'),
-        ('SUPER/EXTRA'),
+        ('DS', 'DIESEL'),
+        ('S/E', 'SUPER/EXTRA'),
     }
     tipocombustible = models.CharField(max_length=50, choices= COMBUSTIBLE, null=False)
     codigoproducto = models.CharField(max_length=7, null=False)

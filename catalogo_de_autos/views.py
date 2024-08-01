@@ -6,18 +6,15 @@ from .models import Marca, ColorAuto, TipoCarro, Iva, FormaPago, Cliente, Auto, 
 # Create your views here.
 
 def index(request):
-    template = loader.get_template('index.html')
-    return HttpResponse(template.render(request))
+    return render(request, 'index.html')
 
 def index_categoria(request):
-    template = loader.get_template('index_categorias.html')
-    return HttpResponse(template.render(request))
-
+    return render(request, 'index_categorias.html')
 
 def display_marca(request):
     marcas = Marca.objects.order_by('marca')
     template = loader.get_template('display_marca.html')
-    return HttpResponse(template.render({'marcas': marcas})(request))
+    return HttpResponse(template.render({'marcas': marcas},request))
 
 def obtener_marca(marca_id):
     marca = Marca.objects.get(pk = marca_id)
@@ -26,7 +23,7 @@ def obtener_marca(marca_id):
 def display_colorauto(request):
     colores = ColorAuto.objects.order_by('colorauto')
     template = loader.get_template('display_colorauto.html')
-    return HttpResponse(template.render({'colores' : colores})(request))
+    return HttpResponse(template.render({'colores' : colores}, request))
 
 def obtener_colores(color_id):
     color = ColorAuto.objects.get(pk = color_id)
@@ -35,7 +32,7 @@ def obtener_colores(color_id):
 def display_tipocarro(request):
     tipos = TipoCarro.objects.order_by('modelocarro')
     template = loader.get_template('display_tipocarro.html')
-    return HttpResponse(template.render({'tipos': tipos})(request))
+    return HttpResponse(template.render({'tipos': tipos},request))
 
 def obtener_tipocarro(tipo_id):
     tipo = TipoCarro.objects.get(pk= tipo_id)
@@ -45,7 +42,7 @@ def obtener_tipocarro(tipo_id):
 def display_iva(request):
     piva = Iva.objects.order_by('valordecalculo')
     template = loader.get_template('display_iva.html')
-    return HttpResponse(template.render({'piva': piva})(request))
+    return HttpResponse(template.render({'piva': piva}, request))
 
 def obtener_iva(iva_id):
     iva = Iva.objects.get(pk = iva_id)
@@ -54,7 +51,7 @@ def obtener_iva(iva_id):
 def display_formapago(request):
     pagos = FormaPago.objects.order_by('formadepago')
     template = loader.get_template('display_formapago.html')
-    return HttpResponse(template.render({'pagos': pagos})(request))
+    return HttpResponse(template.render({'pagos': pagos}, request))
 
 
 def obtener_formadepago(formadepago_id):
@@ -64,7 +61,7 @@ def obtener_formadepago(formadepago_id):
 def display_cliente(request):
     clientes = Cliente.objects.order_by('apellido')
     templade = loader.get_template('display_clientes.html')
-    return HttpResponse(templade.render({'clientes': clientes}), request)
+    return HttpResponse(templade.render({'clientes': clientes}, request))
 
 def index_autos(request):
     autos = Auto.objects.order_by('modelo')

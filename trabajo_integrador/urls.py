@@ -21,7 +21,8 @@ from trabajo_integrador import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('catalogo_de_autos.urls'))
+    path('', include('catalogo_de_autos.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 
