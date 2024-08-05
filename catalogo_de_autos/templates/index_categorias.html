@@ -2,36 +2,36 @@
 {% block title %}Categorias{% endblock %} 
 {% block content %}      
     <h2>Categorias</h2>
-    <a href="{% url 'index' %}" class="btn btn-secondary mb-3">Volver al Inicio</a>
+    <a href="{% url 'catalogo_de_autos:index' %}" class="btn btn-secondary mb-3">Volver al Inicio</a>
     <div class="card-group">
         <div class="card">
             <div class="card-body">
-                <h4>Marca de autos</h4>
-                <a href="{% url "catalogo_de_autos: display_marca" %}" class="btn btn-primary"> Detalle de las marcas</a>
+                <h4><center>Marca de autos</center></h4>
+                <a href="{% url "catalogo_de_autos:display_marca" %}" class="btn btn-primary">Detalle de marcas</a>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h4>Color de los autos</h4>
-                <a href="{% url "catalogo_de_autos: display_colorauto" %}" class="btn btn-primary"> Detalles de los colores</a>
+                <h4><center>Color de los autos</center></h4>
+                <a href="{% url "catalogo_de_autos:display_colorauto" %}" class="btn btn-primary"> Detalles de colores</a>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h4>Tipo de autos</h4>
-                <a href="catalogo_de_autos: display_tipocarro" class="btn btn-primary"> Detalles de los tipos de autos</a>
+                <h4><center>Tipo de autos</center></h4>
+                <a href="{% url "catalogo_de_autos:display_tipocarro" %}" class="btn btn-primary">Detalles de tipos de autos</a>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h4>Iva</h4>
-                <a href="catalogo_de_autos: display_iva" class="btn btn-primary"> Iva</a>
+                <h4><center>Iva</center></h4>
+                <a href="{% url "catalogo_de_autos:display_iva" %}" class="btn btn-primary">Detalles del IVA</a>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h4>Forma de pago</h4>
-                <a href="{% url "catalogo_de_autos: display_formapago" %}" class="btn btn-primary"> Detalles de las formas de pago </a>
+                <h4><center>Forma de pago</center></h4>
+                <a href="{% url "catalogo_de_autos:display_formapago" %}" class="btn btn-primary">Detalles de formas de pago </a>
             </div>
         </div>
 {% endblock %}

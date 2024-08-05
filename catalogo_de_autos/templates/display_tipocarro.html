@@ -1,20 +1,20 @@
 {% extends "base.html" %}
-{% block title %}Marcas de Autos{% endblock %} 
+{% block title %}Tipos de Autos{% endblock %} 
 {% block content %}      
-    <p>Marcas de autos que disponemos:</p>
+    <p>Tipos de autos que disponemos:</p>
     <a href="{% url 'catalogo_de_autos:index_categorias' %}" class="btn btn-secondary mb-3">Volver a Catagorias</a>
     <table class="table">
         <thead>
           <tr>
             <th scope="col">id</th>
-            <th scope="col">Marca</th>
+            <th scope="col">Tipo de Auto</th>
           </tr>
         </thead>
               <tbody>
-                {% for marca in marcas %}
+                {% for tipo in tipos %}
                     <tr>
-                        <th>{{ marca.id }}</th>
-                        <td>{{ marca.marcaauto }}</td>
+                        <th>{{ tipo.id }}</th>
+                        <td>{{ tipo.modelocarro }}</td>
                     </tr>
                   {% endfor %}
               </tbody>

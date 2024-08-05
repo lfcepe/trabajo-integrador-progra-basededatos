@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Agregar Tipo de Carro{% endblock %}
+{% block content %}
+    <h2>Agregar Tipo de Carro</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+    <a href="{% url 'catalogo_de_autos:display_tipocarro' %}" class="btn btn-secondary mt-3">Volver a la lista de tipos de carros</a>
+{% endblock %}

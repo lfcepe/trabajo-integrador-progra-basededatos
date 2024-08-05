@@ -100,7 +100,7 @@ class Auto(models.Model):
     imagencarro = models.ImageField(upload_to='imagenes_autos')
 
     def __str__(self):
-        return f'{self.marca} {self.modelo} {self.tipodeauto}'
+        return f'{self.tipodeauto} {self.marca} {self.modelo}'
         
 
 class Kardex(models.Model):

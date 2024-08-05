@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ auto.modelo }}{% endblock title %}
 {% block content %}
-<p>Has seleccionado un auto: <strong>{{ auto.modelo|capfirst }}</strong></p>
+<p>Has seleccionado un auto: <strong>{{ auto |capfirst }}</strong></p>
 <h3>Características:</h3>
 <ul>
     <li>Año: {{ auto.anioauto }}</li>

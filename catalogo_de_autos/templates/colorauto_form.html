@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Agregar Color de Auto{% endblock %}
+{% block content %}
+    <h2>Agregar Color de Auto</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+    <a href="{% url 'catalogo_de_autos:display_colorauto' %}" class="btn btn-secondary mt-3">Volver a la lista de colores de autos</a>
+{% endblock %}
