@@ -6,7 +6,6 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Auto</th>
                 <th>Fecha Entrada</th>
                 <th>Cantidad Entrada</th>
@@ -15,17 +14,21 @@
                 <th>Cantidad Salida</th>
                 <th>Valor Unitario Salida</th>
                 <th>Valor Total Salida</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
             </tr>
         </thead>
         <tbody>
             {% for kardex in kardexs %}
                 <tr>
-                    <td>{{ kardex.id }}</td>
                     <td>{{ kardex.idauto }}</td>
                     <td>{{ kardex.fechacantidadentrada }}</td>
                     <td>{{ kardex.cantidaddeentrada }}</td>
                     <td>{{ kardex.valorunitarioentrada }}</td>
                     <td>{{ kardex.valortotalentrada }}</td>
+                    <td><a href="edit_kardex/{{ kardex.id }}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                    <td><a href="delete_kardex/{{ kardex.id }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>
             {% endfor %}
         </tbody>
+        <a href="{% url "catalogo_de_autos:add_kardex" %}" class="btn btn-primary">Crear Nueva Entrada de Kardex</a>
 {% endblock content %}

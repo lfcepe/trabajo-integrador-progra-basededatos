@@ -15,6 +15,8 @@
                 <th>IVA</th>
                 <th>Valor Total a Pagar</th>
                 <th>Código de Venta</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
             </tr>
         </thead>
         <tbody>
@@ -29,8 +31,11 @@
                     <td>{{ venta.iva }}</td>
                     <td>{{ venta.valortotalapagar }}</td>
                     <td>{{ venta.codigoventa }}</td>
+                    <td><a href="edit_venta/{{ venta.id }}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                    <td><a href="delete_venta/{{ venta.id }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    <a href="{% url "catalogo_de_autos:add_venta" %}" class="btn btn-primary">Crear Nueva Venta</a>
 {% endblock %}

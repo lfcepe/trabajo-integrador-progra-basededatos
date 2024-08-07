@@ -74,11 +74,11 @@ def add_marca(request):
         form = Marca_Form(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('catalogo_de_autos: index_categorias')
+            return redirect('catalogo_de_autos:display_marca')
     else:
         form = Marca_Form()
     
-    return render(request, 'marca_form', {'form': form})
+    return render(request, 'marca_form.html', {'form': form})
 
 @login_required
 def add_colorauto(request):
@@ -86,11 +86,11 @@ def add_colorauto(request):
         form = ColorAuto_Form(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('catalogo_de_autos: index_categorias')
+            return redirect('catalogo_de_autos:display_colorauto')
     else:
         form = ColorAuto_Form()
     
-    return render(request, 'colorauto_form', {'form': form})
+    return render(request, 'colorauto_form.html', {'form': form})
 
 @login_required
 def add_tipocarro(request):
@@ -98,11 +98,11 @@ def add_tipocarro(request):
         form = TipoCarro_Form(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('catalogo_de_autos: index_categorias')
+            return redirect('catalogo_de_autos:display_tipocarro')
     else:
         form = TipoCarro_Form()
     
-    return render(request, 'tipodecarro_form', {'form': form})
+    return render(request, 'tipodecarro_form.html', {'form': form})
 
 @login_required
 def add_iva(request):
@@ -110,11 +110,11 @@ def add_iva(request):
         form = Iva_Form(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('catalogo_de_autos: index_categorias')
+            return redirect('catalogo_de_autos:display_iva')
     else:
         form = Iva_Form()
     
-    return render(request, 'iva_form', {'form': form})
+    return render(request, 'iva_form.html', {'form': form})
 
 @login_required
 def add_formapago(request):
@@ -122,11 +122,11 @@ def add_formapago(request):
         form = FormaPago_Form(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('catalogo_de_autos: index_categorias')
+            return redirect('catalogo_de_autos:display_formapago')
     else:
         form = FormaPago_Form()
     
-    return render(request, 'formadepago_form', {'form': form})
+    return render(request, 'formadepago_form.html', {'form': form})
 
 @login_required
 def add_cliente(request):
@@ -134,11 +134,11 @@ def add_cliente(request):
         form = Cliente_Form(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('catalogo_de_autos: index_clientes')
+            return redirect('catalogo_de_autos:index_clientes')
     else:
         form = Cliente_Form()
     
-    return render(request, 'cliente_form', {'form': form})
+    return render(request, 'cliente_form.html', {'form': form})
 
 @login_required
 def add_auto(request):
@@ -146,11 +146,11 @@ def add_auto(request):
         form = Auto_Form(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('catalogo_de_autos: index_autos')
+            return redirect('catalogo_de_autos:index_autos')
     else:
         form = Auto_Form()
 
-    return render(request, 'auto_form', {'form': form})
+    return render(request, 'auto_form.html', {'form': form})
 
 @login_required
 def add_kardex(request):
@@ -158,11 +158,11 @@ def add_kardex(request):
         form = Kardex_Form(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('catalogo_de_autos: index_kardex')
+            return redirect('catalogo_de_autos:index_kardex')
     else:
         form = Kardex_Form()
     
-    return render(request, 'kardex_form', {'form': form})
+    return render(request, 'kardex_form.html', {'form': form})
 
 @login_required
 def add_venta(request):
@@ -170,11 +170,11 @@ def add_venta(request):
         form = Venta_Form(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('catalogo_de_autos: index_ventas')
+            return redirect('catalogo_de_autos:index_ventas')
     else:
         form = Venta_Form()
     
-    return render(request, 'venta_form', {'form': form})
+    return render(request, 'venta_form.html', {'form': form})
 
 #EDIT ELEMENTS
 @login_required
@@ -313,31 +313,31 @@ def edit_venta(request, id):
 def delete_marca(request, id):
     marca = get_object_or_404(Marca, pk = id)
     marca.delete()
-    return redirect("catalogo_de_autos:index_categorias")
+    return redirect("catalogo_de_autos:display_marca")
 
 @login_required
 def delete_colorauto(request, id):
     color = get_object_or_404(ColorAuto, pk = id)
     color.delete()
-    return redirect("catalogo_de_autos:index_categorias")
+    return redirect("catalogo_de_autos:display_colorauto")
 
 @login_required
 def delete_tipocarro(request, id):
     tipo = get_object_or_404(TipoCarro, pk = id)
     tipo.delete()
-    return redirect("catalogo_de_autos:index_categorias")
+    return redirect("catalogo_de_autos:display_tipocarro")
 
 @login_required
 def delete_iva(request, id):
     iva = get_object_or_404(Iva, pk = id)
     iva.delete()
-    return redirect("catalogo_de_autos:index_categorias")
+    return redirect("catalogo_de_autos:display_iva")
 
 @login_required
 def delete_formapago(request, id):
     pago = get_object_or_404(FormaPago, pk = id)
     pago.delete()
-    return redirect("catalogo_de_autos:index_categorias")
+    return redirect("catalogo_de_autos:display_formapago")
 
 @login_required
 def delete_clientes(request, id):
@@ -355,8 +355,9 @@ def delete_autos(request, id):
 def delete_kardex(request, id):
     kardex = get_object_or_404(Kardex, pk = id)
     kardex.delete()
-    return redirect("catalogo_de_autos:index_kardex")@login_required
+    return redirect("catalogo_de_autos:index_kardex")
 
+@login_required
 def delete_ventas(request, id):
     venta = get_object_or_404(Venta, pk = id)
     venta.delete()

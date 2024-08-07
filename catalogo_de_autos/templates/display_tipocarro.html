@@ -6,17 +6,20 @@
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">id</th>
             <th scope="col">Tipo de Auto</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Eliminar</th>
           </tr>
         </thead>
               <tbody>
                 {% for tipo in tipos %}
                     <tr>
-                        <th>{{ tipo.id }}</th>
                         <td>{{ tipo.modelocarro }}</td>
+                        <td><a href="edit_tipocarro/{{ tipo.id }}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a href="delete_tipocarro/{{ tipo.id }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>
                     </tr>
                   {% endfor %}
               </tbody>
       </table>
+    <a href="{% url "catalogo_de_autos:add_tipocarro" %}" class="btn btn-primary">Crear Nuevos Tipos de Carro</a>
 {% endblock %}

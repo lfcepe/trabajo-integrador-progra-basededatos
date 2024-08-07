@@ -22,7 +22,7 @@ class TipoCarro(models.Model):
     
 class Iva(models.Model):
     porcentajeiva = models.CharField(max_length = 4, null = False)
-    valordecalculo = models.DecimalField(max_digits=2, decimal_places=2, null = False)
+    valordecalculo = models.DecimalField(max_digits=4, decimal_places=2, null = False)
 
     def __str__(self):
         return self.porcentajeiva
@@ -65,14 +65,14 @@ class Cliente(models.Model):
 		('SD', 'SANTO DOMINGO DE LOS TSACHILAS'),
 		('SE', 'SANTA ELENA'),
     }
-    provincia = models.CharField(max_length=30 , choices= PROVINCIAS, null=False)
+    provincia = models.CharField(choices= PROVINCIAS, null=False)
     numerodetelefono = models.CharField(max_length=10, null = False)
     email = models.CharField(max_length=80, null = False)
     ESTADO_CLIENTE = {
         ('AC', 'ACTIVO'),
         ('INAC', 'INACTIVO'),
     }
-    estadocliente = models.CharField(max_length= 40, choices= ESTADO_CLIENTE, default='ACTIVO', null = False)
+    estadocliente = models.CharField(choices= ESTADO_CLIENTE, null = False)
 
     def __str__(self):
         return f'{self.apellidos} {self.nombres}'
@@ -90,7 +90,7 @@ class Auto(models.Model):
         ('SCK','EN STOCK'),
         ('SSCK', 'SIN STOCK')
     }
-    estado = models.CharField(max_length= 50, choices= ESTADO_PRODUCTO,default="SIN STOCK", null=False)
+    estado = models.CharField(default="SIN STOCK", choices= ESTADO_PRODUCTO, null=False)
     COMBUSTIBLE = {
         ('DS', 'DIESEL'),
         ('S/E', 'SUPER/EXTRA'),

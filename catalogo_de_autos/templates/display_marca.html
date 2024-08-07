@@ -6,17 +6,20 @@
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">id</th>
             <th scope="col">Marca</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Eliminar</th>
           </tr>
         </thead>
               <tbody>
                 {% for marca in marcas %}
                     <tr>
-                        <th>{{ marca.id }}</th>
                         <td>{{ marca.marcaauto }}</td>
+                        <td><a href="edit_marca/{{ marca.id }}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a href="delete_marca/{{ marca.id }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>
                     </tr>
                   {% endfor %}
               </tbody>
       </table>
+    <a href="{% url "catalogo_de_autos:add_marca" %}" class="btn btn-primary">Crear Nuevas Marcas</a>
 {% endblock %}

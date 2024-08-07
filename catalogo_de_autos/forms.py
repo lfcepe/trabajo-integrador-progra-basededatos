@@ -68,10 +68,8 @@ class Auto_Form(forms.ModelForm):
             'color': forms.Select(attrs={'class': 'form_control'}),
             'modelo': forms.TextInput(attrs={'class': 'form_control'}),
             'anioauto': forms.TextInput(attrs={'class': 'form_control'}),
-            'precioporunidad': MoneyWidget(amount_widget=forms.NumberInput(attrs={'class': 'form-control'}), currency_widget=forms.Select(attrs={'class': 'form-control'})),
-            'estado': forms.Select(attrs={'class': 'form_control'}),
             'tipocombustible': forms.Select(attrs={'class': 'form_control'}),
-            'codigoproducto': forms.Select(attrs={'class': 'form_control'}),
+            'codigoproducto': forms.TextInput(attrs={'class': 'form_control'}),
             'imagencarro': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
         }
 
