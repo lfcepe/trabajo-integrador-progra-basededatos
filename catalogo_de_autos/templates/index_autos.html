@@ -6,15 +6,15 @@
 <div class="card-group">
     {% for auto in autos %}
         <div class="card">
-            <img src="{{ auto.imagencarro.url }}" alt="">
+            <img src="{{ auto.picture.url }}" class="img-fluid rounded-start" alt="">
             <div class="card-body">
                 <h5 class="card-title">{{ auto.modelo }}</h5>
                 <p class="card-text">Marca: {{ auto.marca }}</p>
                 <p class="card-text">Color: {{ auto.color }}</p>
                 <p class="card-text">Año: {{ auto.anioauto }}</p>
-                <a href="auto/{{ auto.id }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i>Detalles</a>
-                <a href="edit_auto/{{ auto.id }}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i>Editar</a>
-                <a href="delete_auto/{{ auto.id }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i>Eliminar</a>
+                <a href="auto/{{ auto.id }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i></a>
+                <a href="edit_auto/{{ auto.id }}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="delete_auto/{{ auto.id }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
                 </a>
             </div>
         </div>

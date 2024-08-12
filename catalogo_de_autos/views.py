@@ -1,10 +1,10 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import redirect, render, get_object_or_404
-from .models import Marca, ColorAuto, TipoCarro, Iva, FormaPago, Cliente, Auto, Kardex, Venta
+from .models import Marca, ColorAuto, TipoCarro, FormaPago, Cliente, Auto, Kardex, Venta
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
-from .forms import Marca_Form, ColorAuto_Form, TipoCarro_Form, Iva_Form, FormaPago_Form, Cliente_Form, Auto_Form, Kardex_Form, Venta_Form
+from .forms import Marca_Form, ColorAuto_Form, TipoCarro_Form, FormaPago_Form, Cliente_Form, Auto_Form, Kardex_Form, Venta_Form
 # Create your views here.
 
 def index(request):
@@ -25,10 +25,6 @@ def display_colorauto(request):
 def display_tipocarro(request):
     tipos = TipoCarro.objects.order_by('modelocarro')
     return render(request,'display_tipocarro.html', {'tipos':tipos})
-
-def display_iva(request):
-    piva = Iva.objects.order_by('valordecalculo')
-    return render(request, 'display_iva.html', {'piva': piva})
 
     
 def display_formapago(request):
@@ -104,17 +100,6 @@ def add_tipocarro(request):
     
     return render(request, 'tipodecarro_form.html', {'form': form})
 
-@login_required
-def add_iva(request):
-    if request.method == 'POST':
-        form = Iva_Form(request.POST,request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('catalogo_de_autos:display_iva')
-    else:
-        form = Iva_Form()
-    
-    return render(request, 'iva_form.html', {'form': form})
 
 @login_required
 def add_formapago(request):
@@ -217,19 +202,6 @@ def edit_tipocarro(request, id):
     return render(request, 'tipodecarro_form.html', {'form': form})
 
 @login_required
-def edit_iva(request, id):
-    iva = get_object_or_404(Iva, pk = id)
-    if request.method == 'POST':
-        form = Iva_Form(request.POST,request.FILES, instance=iva)
-        if form.is_valid():
-            form.save()
-            return redirect('catalogo_de_autos:index_categorias')
-    else:
-        form = Iva_Form(instance=iva)
-        
-    return render(request, 'iva_form.html', {'form': form})
-
-@login_required
 def edit_formapago(request, id):
     pago = get_object_or_404(FormaPago, pk = id)
     if request.method == 'POST':
@@ -327,11 +299,6 @@ def delete_tipocarro(request, id):
     tipo.delete()
     return redirect("catalogo_de_autos:display_tipocarro")
 
-@login_required
-def delete_iva(request, id):
-    iva = get_object_or_404(Iva, pk = id)
-    iva.delete()
-    return redirect("catalogo_de_autos:display_iva")
 
 @login_required
 def delete_formapago(request, id):

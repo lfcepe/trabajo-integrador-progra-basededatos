@@ -1,0 +1,47 @@
+Create or replace procedure recargo_kardex
+(
+	codigoauto VARCHAR,
+	fecha DATE,
+	cantidadentrada INTEGER
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE 
+	valor_u NUMERIC = (SELECT precioporunidad FROM catalogo_de_autos_auto WHERE codigoproducto = codigoauto);
+	moneda CHARACTER(3) = 'USD';
+BEGIN
+	IF cantidadentrada IS NOT NULL AND valor_u IS NOT NULL THEN
+		IF NOT EXISTS (SELECT 1 FROM catalogo_de_autos_kardex WHERE auto_id = (SELECT id FROM catalogo_de_autos_auto WHERE codigoproducto = codigoauto))THEN
+			INSERT INTO catalogo_de_autos_kardex
+			(
+				auto_id,
+				fechacantidadentrada,
+				cantidaddeentrada,
+				valorunitarioentrada_currency,
+				valorunitarioentrada,
+				valortotalentrada_currency,
+				valortotalentrada,
+				valorunitariodesalida_currency,
+				valortotaldesalida_currency
+			)
+			VALUES
+			(
+				(SELECT auto FROM catalogo_de_autos_auto WHERE codigoproducto = codigoauto),
+				fecha,
+				cantidadentrada,
+				moneda,
+				valor_u,
+				moneda,
+				cantidadentrada * valor_u,
+				moneda,
+				moneda
+			);
+		ELSE
+			RAISE EXCEPTION 'EL AUTO YA ESTA REGISTRADO EN KARDEX, VUELVA A INTENTAR';
+		END IF;
+	ELSE
+		RAISE NOTICE 'LOS VALORES DE CANTIDAD O VALOR DEL AUTOS SON NULOS, AGREGE UN VALOR';
+	END IF;
+END $$;
+select * from catalogo_de_autos_auto
+CALL recargo_kardex ('INC6423', ('12/08/2024'), 8)

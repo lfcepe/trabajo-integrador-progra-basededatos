@@ -1,6 +1,6 @@
 from django import forms
-from .models import ColorAuto,TipoCarro,Iva,Marca,FormaPago,Cliente,Auto,Kardex,Venta
-from djmoney.forms.widgets import MoneyWidget
+from .models import ColorAuto,TipoCarro, Marca,FormaPago,Cliente,Auto,Kardex,Venta
+
 
 class Marca_Form(forms.ModelForm):
     class Meta:
@@ -24,15 +24,6 @@ class TipoCarro_Form(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'modelocarro': forms.TextInput(attrs={'class': 'form_control'}),
-        }
-
-class Iva_Form(forms.ModelForm):
-    class Meta:
-        model = Iva
-        fields = '__all__'
-        widgets = {
-            'porcentajeiva': forms.TextInput(attrs={'class': 'form_control'}),
-            'valordecalculo': forms.NumberInput(attrs={'class': 'form_control'}),
         }
 
 class FormaPago_Form(forms.ModelForm):
@@ -60,18 +51,7 @@ class Cliente_Form(forms.ModelForm):
 class Auto_Form(forms.ModelForm):
     class Meta:
         model = Auto
-        fields = ['marca', 'tipodeauto', 'color', 'modelo', 'anioauto', 'precioporunidad', 'estado', 'tipocombustible', 'codigoproducto', 'imagencarro'
-]
-        widgets = {
-            'marca': forms.Select(attrs={'class': 'form_control'}),
-            'tipodeauto': forms.Select(attrs={'class': 'form_control'}),
-            'color': forms.Select(attrs={'class': 'form_control'}),
-            'modelo': forms.TextInput(attrs={'class': 'form_control'}),
-            'anioauto': forms.TextInput(attrs={'class': 'form_control'}),
-            'tipocombustible': forms.Select(attrs={'class': 'form_control'}),
-            'codigoproducto': forms.TextInput(attrs={'class': 'form_control'}),
-            'imagencarro': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
-        }
+        fields = '__all__'
 
 class Kardex_Form (forms.ModelForm):
     class Meta:

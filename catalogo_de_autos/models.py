@@ -19,14 +19,7 @@ class TipoCarro(models.Model):
     
     def __str__(self) -> str:
         return self.modelocarro
-    
-class Iva(models.Model):
-    porcentajeiva = models.CharField(max_length = 4, null = False)
-    valordecalculo = models.DecimalField(max_digits=4, decimal_places=2, null = False)
-
-    def __str__(self):
-        return self.porcentajeiva
-    
+      
 
 class FormaPago(models.Model):
     formadepago = models.CharField(max_length=50, null = False)
@@ -85,19 +78,19 @@ class Auto(models.Model):
     modelo = models.CharField(null = False)
     anioauto = models.CharField(max_length=4, null = False)
     precioporunidad = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', null = False)
-    cantidad = models.IntegerField(null=True)
+    cantidad = models.IntegerField(default=0, null = False)
     ESTADO_PRODUCTO = {
-        ('SCK','EN STOCK'),
-        ('SSCK', 'SIN STOCK')
+        ('EN STOCK','EN STOCK'),
+        ('SIN STOCK', 'SIN STOCK')
     }
-    estado = models.CharField(default="SIN STOCK", choices= ESTADO_PRODUCTO, null=False)
+    estado = models.CharField(default='SIN STOCK' ,choices= ESTADO_PRODUCTO, null=False)
     COMBUSTIBLE = {
-        ('DS', 'DIESEL'),
-        ('S/E', 'SUPER/EXTRA'),
+        ('DIESEL', 'DIESEL'),
+        ('SUPER/EXTRA', 'SUPER/EXTRA'),
     }
     tipocombustible = models.CharField(max_length=50, choices= COMBUSTIBLE, null=False)
-    codigoproducto = models.CharField(max_length=7, null=False)
-    imagencarro = models.ImageField(upload_to='imagenes_autos')
+    codigoproducto = models.CharField(max_length=7)
+    picture = models.ImageField(upload_to='cars_images')
 
     def __str__(self):
         return f'{self.tipodeauto} {self.marca} {self.modelo}'
@@ -125,6 +118,9 @@ class Venta(models.Model):
     formadepago = models.ForeignKey(FormaPago, on_delete=models.CASCADE)
     cantidaddeventa = models.IntegerField(null = False)
     valordelauto = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',null= False) 
-    iva = models.ForeignKey(Iva,on_delete=models.CASCADE)
+    IVA = {
+        ('15%','15%'),
+    }
+    iva = models.CharField(default="15%", choices=IVA, null = False)
     valortotalapagar = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',null= False) 
     codigoventa = models.CharField(max_length=7, null = False)
