@@ -1,5 +1,5 @@
 from django import forms
-from .models import ColorAuto,TipoCarro, Marca,FormaPago,Cliente,Auto,Kardex,Venta
+from .models import ColorAuto,TipoCarro, Marca,FormaPago,Cliente,Auto,Venta
 
 
 class Marca_Form(forms.ModelForm):
@@ -51,28 +51,22 @@ class Cliente_Form(forms.ModelForm):
 class Auto_Form(forms.ModelForm):
     class Meta:
         model = Auto
-        fields = '__all__'
+        fields = ['marca', 'tipodeauto', 'color', 'modelo', 'anioauto', 'precioporunidad', 'tipocombustible', 'codigoproducto', 'picture']
 
-class Kardex_Form (forms.ModelForm):
-    class Meta:
-        model = Kardex
-        fields = ['auto', 'fechacantidadentrada', 'cantidaddeentrada']
-        widgets = {
-            'auto': forms.Select(attrs={'class': 'form_control'}),
-            'fechacantidadentrada': forms.DateInput(attrs={'type': 'date'}),
-            'cantidaddeentrada': forms.NumberInput(attrs={'class': 'form_control'}),
-        }
 
 class Venta_Form (forms.ModelForm):
     class Meta:
         model = Venta
-        fields = ['cliente', 'auto', 'fechacompra', 'formadepago', 'cantidaddeventa', 'iva', 'codigoventa']
-        widgets = {
-            'cliente': forms.Select(attrs={'class': 'form_control'}),
-            'auto': forms.Select(attrs={'class': 'form_control'}),
-            'fechacompra': forms.DateInput(attrs={'type': 'date'}),
-            'formadepago': forms.Select(attrs={'class': 'form_control'}),
-            'cantidaddeventa': forms.NumberInput(attrs={'class': 'form_control'}),
-            'iva': forms.Select(attrs={'class': 'form_control'}),
-            'codigoventa': forms.TextInput(attrs={'class': 'form_control'}),
+        fields = ['cliente', 'auto', 'fechacompra', 'formadepago', 'cantidaddeventa', 'iva', 'valoriva', 'codigoventa']
+        witgets = {
+            'fechacompra': forms.DateInput(attrs={'class': 'form-control', 'id': 'datepicker'}),
         }
+        
+
+        def save(self, commit = True):
+            venta = super().save(commit=False)
+            venta.obtener_valor_vehiculo()
+            venta.calcular_costo_final()
+            if commit:
+                venta.save()
+            return venta

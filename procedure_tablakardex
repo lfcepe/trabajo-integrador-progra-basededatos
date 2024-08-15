@@ -1,4 +1,5 @@
-Create or replace procedure recargo_kardex
+--RECARGO DE KARDEX
+CREATE OR REPLACE PROCEDURE recargo_kardex
 (
 	codigoauto VARCHAR,
 	fecha DATE,
@@ -10,38 +11,142 @@ DECLARE
 	valor_u NUMERIC = (SELECT precioporunidad FROM catalogo_de_autos_auto WHERE codigoproducto = codigoauto);
 	moneda CHARACTER(3) = 'USD';
 BEGIN
-	IF cantidadentrada IS NOT NULL AND valor_u IS NOT NULL THEN
-		IF NOT EXISTS (SELECT 1 FROM catalogo_de_autos_kardex WHERE auto_id = (SELECT id FROM catalogo_de_autos_auto WHERE codigoproducto = codigoauto))THEN
-			INSERT INTO catalogo_de_autos_kardex
+	IF EXISTS (SELECT 1 FROM catalogo_de_autos_auto WHERE codigoproducto = codigoauto) THEN
+		IF cantidadentrada > 0 THEN
+			INSERT INTO catalogo_de_autos_kardexentradas
 			(
-				auto_id,
+				auto,
 				fechacantidadentrada,
 				cantidaddeentrada,
 				valorunitarioentrada_currency,
 				valorunitarioentrada,
 				valortotalentrada_currency,
-				valortotalentrada,
-				valorunitariodesalida_currency,
-				valortotaldesalida_currency
+				valortotalentrada
 			)
 			VALUES
 			(
-				(SELECT auto FROM catalogo_de_autos_auto WHERE codigoproducto = codigoauto),
+				(SELECT codigoproducto FROM catalogo_de_autos_auto WHERE codigoproducto = codigoauto),
 				fecha,
 				cantidadentrada,
 				moneda,
 				valor_u,
 				moneda,
-				cantidadentrada * valor_u,
-				moneda,
-				moneda
+				cantidadentrada * valor_u
 			);
+			RAISE NOTICE 'AUTO REGISTRADO CON EXITO';
+			PERFORM actualizar_stock(codigoauto, cantidadentrada);
 		ELSE
-			RAISE EXCEPTION 'EL AUTO YA ESTA REGISTRADO EN KARDEX, VUELVA A INTENTAR';
+			RAISE NOTICE 'LOS VALORES DE CANTIDAD ES MENOS A 0, AGREGE UN VALOR MAYOR A 0';
 		END IF;
 	ELSE
-		RAISE NOTICE 'LOS VALORES DE CANTIDAD O VALOR DEL AUTOS SON NULOS, AGREGE UN VALOR';
+		RAISE NOTICE 'CODIGO INEXISTENTE, VUELVA A INGRESAR';
 	END IF;
 END $$;
+
+--FUNCION PARA ACTUALIZAR LA TABLA AUTO
+CREATE OR REPLACE FUNCTION actualizar_stock
+(
+	codigo VARCHAR,
+	cantidadk INTEGER
+)
+RETURNS VOID AS $$
+BEGIN
+	UPDATE catalogo_de_autos_auto
+	SET
+		cantidad = cantidad + cantidadk,
+		estado = 'EN STOCK'
+	WHERE
+	codigoproducto = codigo;
+	RAISE NOTICE 'RECARGADO EL STOCK EN AUTOS';
+END;
+$$ LANGUAGE plpgsql;
+
+--ACTUALIZAR SALIDAS
+Create or replace procedure salidas_kardex
+(
+	codigoauto VARCHAR,
+	codigov VARCHAR 
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE 
+	valor_u NUMERIC = (SELECT precioporunidad FROM catalogo_de_autos_auto WHERE codigoproducto = codigoauto);
+	moneda CHARACTER(3) = 'USD';
+	cantidadsalida INTEGER = (SELECT cantidaddeventa FROM catalogo_de_autos_venta WHERE (auto_id=(SELECT id FROM catalogo_de_autos_auto WHERE codigoproducto = codigoauto)) AND (codigoventa = codigov));
+	fecha DATE = (SELECT fechacompra FROM catalogo_de_autos_venta WHERE auto_id = (SELECT id FROM catalogo_de_autos_auto WHERE (codigoproducto = codigoauto)) AND (codigoventa = codigov));
+BEGIN
+	IF cantidadsalida <= (SELECT cantidad FROM catalogo_de_autos_auto WHERE codigoproducto = codigoauto) THEN
+			INSERT INTO catalogo_de_autos_kardexsalidas
+			(
+				auto,
+				fechacantidaddesalida,
+				cantidadsalida,
+				valorunitariodesalida_currency,
+				valorunitariodesalida,
+				valortotaldesalida_currency,
+				valortotaldesalida
+			)
+			VALUES
+			(
+				(SELECT codigoproducto FROM catalogo_de_autos_auto WHERE codigoproducto = codigoauto),
+				fecha,
+				cantidadsalida,
+				moneda,
+				valor_u,
+				moneda,
+				cantidadsalida * valor_u
+			);
+			PERFORM actualizar_stock_venta(codigoauto, cantidadsalida);
+			PERFORM actualizar_estado_auto(codigoauto, cantidadsalida);
+			RAISE NOTICE 'SALIDA DE AUTO REGISTRADO CON EXITO';
+	ELSE
+		RAISE NOTICE 'LOS VALORES DE CANTIDAD SUPERA A LA CANTIDAD QUE HAY EN EL INVENTARIO, INGRESE UN NUMERO MENOR';
+	END IF;
+END $$;
+
+--FUNCION ACTUALIZAR AUTOS DESPUES DE UNA VENTA
+CREATE OR REPLACE FUNCTION actualizar_stock_venta
+(
+	codigo VARCHAR,
+	cantidadventa INTEGER
+)
+RETURNS VOID AS $$
+DECLARE
+	cantidadt INTEGER = (SELECT cantidad FROM catalogo_de_autos_auto WHERE codigoproducto = codigo);
+BEGIN
+	IF cantidadventa <= (SELECT cantidad FROM catalogo_de_autos_auto WHERE codigoproducto = codigo) THEN
+		UPDATE catalogo_de_autos_auto
+		SET
+			cantidad = cantidad - cantidadventa
+		WHERE
+			codigoproducto = codigo;
+		RAISE NOTICE 'ACTUALIZADO EL STOCK EN AUTOS DESPUES DE UNA VENTA';
+	ELSE
+		RAISE EXCEPTION 'CANTIDAD SUPERA A LA QUE HAY EN STOCK, NO SE PUEDE REALIZAR LA VENTA';
+	END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION actualizar_estado_auto
+(
+	codigo VARCHAR,
+	cantidadventa INTEGER
+)
+RETURNS VOID AS $$
+DECLARE
+	cantidadt INTEGER = (SELECT cantidad FROM catalogo_de_autos_auto WHERE codigoproducto = codigo);
+BEGIN
+	IF  cantidadt = 0 THEN
+		UPDATE catalogo_de_autos_auto
+		SET
+			estado = 'SIN STOCK'
+		WHERE
+			codigoproducto = codigo;
+		RAISE NOTICE 'ESTADO DEL VEHICULO ACTUALIZADO';
+	END IF;
+END;
+$$ LANGUAGE plpgsql;
+--CALLS DE PROCESOS
 select * from catalogo_de_autos_auto
-CALL recargo_kardex ('INC6423', ('12/08/2024'), 8)
+CALL recargo_kardex ('INC6423', ('12/08/2024'), 1)
+CALL salidas_kardex ('INC6423', 'DUDUDUU')

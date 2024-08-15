@@ -1,10 +1,10 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import redirect, render, get_object_or_404
-from .models import Marca, ColorAuto, TipoCarro, FormaPago, Cliente, Auto, Kardex, Venta
+from .models import Marca, ColorAuto, TipoCarro, FormaPago, Cliente, Auto, KardexEntradas, KardexSalidas, Venta
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
-from .forms import Marca_Form, ColorAuto_Form, TipoCarro_Form, FormaPago_Form, Cliente_Form, Auto_Form, Kardex_Form, Venta_Form
+from .forms import Marca_Form, ColorAuto_Form, TipoCarro_Form, FormaPago_Form, Cliente_Form, Auto_Form, Venta_Form
 # Create your views here.
 
 def index(request):
@@ -45,19 +45,27 @@ def display_autos(request, auto_id):
     return render(request, 'display_autos.html', {'auto':auto})
 
 def index_kardex(request):
-    kardexs = Kardex.objects.order_by('fechacantidadentrada')
-    template = loader.get_template('index_kardex.html')
-    return HttpResponse(template.render({'kardexs': kardexs}, request))
+    return render(request, 'index_kardex.html')
 
+def display_kardexentradas(request):
+    kardexse = KardexEntradas.objects.order_by('fechacantidadentrada')
+    template = loader.get_template('display_kardexentradas.html')
+    return HttpResponse(template.render({'kardexse': kardexse}, request))
 
-def obtener_kardex(kardex_id):
-    kardex = Kardex.objects.get(pk = kardex_id)
-    return {'kardex': kardex}
+def display_kardexsalidas(request):
+    kardexss = KardexSalidas.objects.order_by('fechacantidaddesalida')
+    template = loader.get_template('display_kardexsalidas.html')
+    return HttpResponse(template.render({'kardexss': kardexss}, request))
+
 
 def index_ventas(request):
     ventas = Venta.objects.order_by('fechacompra')
-    template = loader.get_template('index_ventas.html')
-    return HttpResponse(template.render({'ventas': ventas}, request))
+    return render( request, 'index_ventas.html',{'ventas': ventas})
+
+def detalle_venta(request, venta_id):
+    venta = get_object_or_404(Venta, pk=venta_id)
+    return render(request, 'display_ventas.html', {'venta': venta})
+
 
 #LOGIN VIEW
 class CustomLoginView(LoginView):
@@ -137,24 +145,13 @@ def add_auto(request):
 
     return render(request, 'auto_form.html', {'form': form})
 
-@login_required
-def add_kardex(request):
-    if request.method == 'POST':
-        form = Kardex_Form(request.POST,request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('catalogo_de_autos:index_kardex')
-    else:
-        form = Kardex_Form()
-    
-    return render(request, 'kardex_form.html', {'form': form})
 
 @login_required
 def add_venta(request):
     if request.method == 'POST':
         form = Venta_Form(request.POST,request.FILES)
         if form.is_valid():
-            form.save()
+            venta = form.save()
             return redirect('catalogo_de_autos:index_ventas')
     else:
         form = Venta_Form()
@@ -169,7 +166,7 @@ def edit_marca(request, id):
         form = Marca_Form(request.POST,request.FILES, instance=marca)
         if form.is_valid():
             form.save()
-            return redirect('catalogo_de_autos:index_categorias')
+            return redirect('catalogo_de_autos:display_marca')
     else:
         form = Marca_Form(instance=marca)
         
@@ -182,9 +179,9 @@ def edit_colorauto(request, id):
         form = ColorAuto_Form(request.POST,request.FILES, instance=color)
         if form.is_valid():
             form.save()
-            return redirect('catalogo_de_autos:index_categorias')
+            return redirect('catalogo_de_autos:display_colorauto')
     else:
-        form = TipoCarro_Form(instance=color)
+        form = ColorAuto_Form(instance=color)
         
     return render(request, 'colorauto_form.html', {'form': form})
 
@@ -195,7 +192,7 @@ def edit_tipocarro(request, id):
         form = TipoCarro_Form(request.POST,request.FILES, instance=tipo)
         if form.is_valid():
             form.save()
-            return redirect('catalogo_de_autos:index_categorias')
+            return redirect('catalogo_de_autos:display_tipocarro')
     else:
         form = TipoCarro_Form(instance=tipo)
         
@@ -205,27 +202,15 @@ def edit_tipocarro(request, id):
 def edit_formapago(request, id):
     pago = get_object_or_404(FormaPago, pk = id)
     if request.method == 'POST':
-        form = Marca_Form(request.POST,request.FILES, instance=pago)
+        form = FormaPago_Form(request.POST,request.FILES, instance=pago)
         if form.is_valid():
             form.save()
-            return redirect('catalogo_de_autos:index_categorias')
+            return redirect('catalogo_de_autos:display_formapago')
     else:
         form = FormaPago_Form(instance=pago)
         
     return render(request, 'formadepago_form.html', {'form': form})
 
-@login_required
-def edit_marca(request, id):
-    marca = get_object_or_404(Marca, pk = id)
-    if request.method == 'POST':
-        form = Marca_Form(request.POST,request.FILES, instance=marca)
-        if form.is_valid():
-            form.save()
-            return redirect('catalogo_de_autos:index_categorias')
-    else:
-        form = Marca_Form(instance=marca)
-        
-    return render(request, 'marca_form.html', {'form': form})
 
 @login_required
 def edit_cliente(request, id):
@@ -253,18 +238,6 @@ def edit_auto(request, id):
         
     return render(request, 'auto_form.html', {'form': form})
 
-@login_required
-def edit_kardex(request, id):
-    kardex = get_object_or_404(Kardex, pk = id)
-    if request.method == 'POST':
-        form = Kardex_Form(request.POST,request.FILES, instance=kardex)
-        if form.is_valid():
-            form.save()
-            return redirect('catalogo_de_autos:index_kardex')
-    else:
-        form = Kardex_Form(instance=kardex)
-        
-    return render(request, 'kardex_form.html', {'form': form})
 
 @login_required
 def edit_venta(request, id):
@@ -319,10 +292,16 @@ def delete_autos(request, id):
     return redirect("catalogo_de_autos:index_autos")
 
 @login_required
-def delete_kardex(request, id):
-    kardex = get_object_or_404(Kardex, pk = id)
-    kardex.delete()
-    return redirect("catalogo_de_autos:index_kardex")
+def delete_kardexentradas(request, id):
+    kardexentradas = get_object_or_404(KardexEntradas, pk = id)
+    kardexentradas.delete()
+    return redirect("catalogo_de_autos:display_kardexentradas")
+
+@login_required
+def delete_kardexsalidas(request, id):
+    kardexsalidas = get_object_or_404(KardexSalidas, pk = id)
+    kardexsalidas.delete()
+    return redirect("catalogo_de_autos:display_kardexsalidas")
 
 @login_required
 def delete_ventas(request, id):

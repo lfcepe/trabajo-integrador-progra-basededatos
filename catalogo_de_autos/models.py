@@ -1,5 +1,6 @@
 from django.db import models
 from djmoney.models.fields import MoneyField
+from django.utils import timezone
 
 class Marca(models.Model):
     marcaauto = models.CharField(max_length=50, null = False)
@@ -96,31 +97,57 @@ class Auto(models.Model):
         return f'{self.tipodeauto} {self.marca} {self.modelo}'
         
 
-class Kardex(models.Model):
-    auto = models.ForeignKey(Auto, on_delete=models.CASCADE)
+class KardexEntradas(models.Model):
+    auto = models.CharField(max_length=50, null = False)
     fechacantidadentrada = models.DateField(null = False)
     cantidaddeentrada = models.IntegerField(null = False)
     valorunitarioentrada = MoneyField (max_digits=14, decimal_places=2, default_currency='USD', null = False)
     valortotalentrada = MoneyField (max_digits=14, decimal_places=2, default_currency='USD', null = False)
-    fechacantidaddesalidad = models.DateField(null = True)
+
+    def __str__(self):
+        return self.auto
+     
+class KardexSalidas(models.Model):
+    auto = models.CharField(max_length=50, null = False)
+    fechacantidaddesalida = models.DateField(null = True)
     cantidadsalida = models.IntegerField(null=True)
     valorunitariodesalida = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',null=True)  
     valortotaldesalida = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',null=True) 
 
     def __str__(self):
         return self.auto
-     
 
 class Venta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     auto = models.ForeignKey(Auto, on_delete=models.CASCADE)
-    fechacompra = models.DateField(null = False)
+    fechacompra = models.DateField(default=timezone.now, null = False)
     formadepago = models.ForeignKey(FormaPago, on_delete=models.CASCADE)
     cantidaddeventa = models.IntegerField(null = False)
     valordelauto = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',null= False) 
-    IVA = {
-        ('15%','15%'),
-    }
-    iva = models.CharField(default="15%", choices=IVA, null = False)
+    iva = models.CharField(default="15%", max_length=3, null = False)
+    valoriva = models.DecimalField(max_digits=5, decimal_places=2, null = False)
     valortotalapagar = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',null= False) 
     codigoventa = models.CharField(max_length=7, null = False)
+
+    def __str__(self) -> str:
+        return f'{self.codigoventa}-{self.cliente}'
+    
+    def obtener_valor_vehiculo(self):
+        self.valordelauto = self.auto.precioporunidad
+        return self.valordelauto
+    
+    def calcular_costo_final (self):
+        if self.cantidaddeventa <= self.auto.cantidad:
+            auto = self.auto.precioporunidad
+            cantidad = self.cantidaddeventa
+            self.valortotalapagar = cantidad * auto * self.valoriva
+            return self.valortotalapagar
+        else:
+            return print('Cantidad de venta mayor a la cantidad de stock, vuelva a ingresar')
+    
+    def save(self, *args, **kwargs):
+        if not self.valordelauto:
+            self.obtener_valor_vehiculo()
+        if not self.valortotalapagar:
+            self.calcular_costo_final()
+        super().save(*args, **kwargs)

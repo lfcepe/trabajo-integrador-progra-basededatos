@@ -12,5 +12,7 @@
     <li>Cantidad: {{ auto.cantidad }}</li>
     <li>Estado: {{ auto.estado }}</li>
     <li>Tipo de Combustible: {{ auto.tipocombustible }}</li>
+    <li>Codigo del Producto: {{ auto.codigoproducto }}</li>
 </ul>
+<a href="{% url 'catalogo_de_autos:index_autos' %}" class="btn btn-secondary mt-3">Volver a la lista de autos</a>
 {% endblock content %}

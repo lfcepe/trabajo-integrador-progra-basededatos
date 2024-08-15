@@ -3,32 +3,24 @@
 {% block content %}
     <h2>Kardex</h2>
     <a href="{% url 'catalogo_de_autos:index' %}" class="btn btn-secondary mb-3">Volver a Inicio</a>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Auto</th>
-                <th>Fecha Entrada</th>
-                <th>Cantidad Entrada</th>
-                <th>Valor Unitario Entrada</th>
-                <th>Valor Total Entrada</th>
-                <th>Cantidad Salida</th>
-                <th>Valor Unitario Salida</th>
-                <th>Valor Total Salida</th>
-                <th>Editar</th>
-                <th>Eliminar</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for kardex in kardexs %}
-                <tr>
-                    <td>{{ kardex.idauto }}</td>
-                    <td>{{ kardex.fechacantidadentrada }}</td>
-                    <td>{{ kardex.cantidaddeentrada }}</td>
-                    <td>{{ kardex.valorunitarioentrada }}</td>
-                    <td>{{ kardex.valortotalentrada }}</td>
-                    <td><a href="edit_kardex/{{ kardex.id }}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                    <td><a href="delete_kardex/{{ kardex.id }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>
-            {% endfor %}
-        </tbody>
-        <a href="{% url "catalogo_de_autos:add_kardex" %}" class="btn btn-primary">Crear Nueva Entrada de Kardex</a>
+    <div class="row">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Entradas en Kardex</h5>
+              <p class="card-text">Compras para recargar el inventario</p>
+              <a href="{% url "catalogo_de_autos:display_kardexentradas" %}" class="btn btn-secondary"><i class="fa-regular fa-eye"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Salidas en Kardex</h5>
+              <p class="card-text">Ventas del producto</p>
+              <a href="{% url "catalogo_de_autos:display_kardexsalidas" %}" class="btn btn-secondary"><i class="fa-regular fa-eye"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
 {% endblock content %}

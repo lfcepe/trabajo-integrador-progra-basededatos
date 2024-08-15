@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Colores Autos{% endblock %} 
+{% block content %}      
+    <h2>Detalles de la Venta</h2>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Cliente</th>
+                <th scope="col">Auto Comprado</th>
+                <th scope="col">Fecha Compra</th>
+                <th scope="col">Forma de Pago</th>
+                <th scope="col">Cantidad vendida</th>
+                <th scope="col">Precio Unitario</th>
+                <th scope="col">IVA</th>
+                <th scope="col">Total a Pagar</th>
+                <th scope="col">Código de venta</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ venta.cliente }}</td>
+                    <td>{{ venta.auto }}</td>
+                    <td>{{ venta.fechacompra }}</td>
+                    <td>{{ venta.formadepago }}</td>
+                    <td>{{ venta.cantidaddeventa }}</td>
+                    <td>{{ venta.auto.precioporunidad }}</td>
+                    <td>{{ venta.iva }}</td>
+                    <td>{{ venta.valortotalapagar }}</td>
+                    <td>{{ venta.codigoventa }}</td>
+                </tr>
+            </tbody>
+    </table>
+{% endblock %}

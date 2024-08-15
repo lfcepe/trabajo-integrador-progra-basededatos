@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Marca, TipoCarro, ColorAuto, FormaPago, Cliente, Auto, Kardex, Venta
+from .models import Marca, TipoCarro, ColorAuto, FormaPago, Cliente, Auto, KardexEntradas, KardexSalidas, Venta
 # Register your models here.
 
 @admin.register(Marca)
@@ -27,7 +27,11 @@ class ClienteAdmin(admin.ModelAdmin):
 class AutoAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(Kardex)
+@admin.register(KardexEntradas)
+class KardexAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(KardexSalidas)
 class KardexAdmin(admin.ModelAdmin):
     pass
 

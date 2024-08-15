@@ -15,7 +15,10 @@ urlpatterns = [
     path("index_autos/", views.index_autos, name="index_autos"),
     path("index_autos/auto/<int:auto_id>/", views.display_autos, name="display_autos"),
     path("index_kardex/", views.index_kardex, name="index_kardex"),
+    path("index_kardex/display_kardexentradas/", views.display_kardexentradas, name="display_kardexentradas"),
+    path("index_kardex/display_kardexsalidas/", views.display_kardexsalidas, name="display_kardexsalidas"),
     path("index_ventas/", views.index_ventas, name="index_ventas"),
+    path("index_ventas/venta/<int:venta_id>/", views.detalle_venta, name="display_ventas" ),
     #form
     path("add_marca/", views.add_marca, name = "add_marca"),
     path("add_colorauto/", views.add_colorauto, name="add_colorauto"),
@@ -23,7 +26,6 @@ urlpatterns = [
     path("add_formapago/", views.add_formapago, name="add_formapago"),
     path("add_cliente/", views.add_cliente, name="add_cliente"),
     path("add_auto/", views.add_auto, name="add_auto"),
-    path("add_kardex/", views.add_kardex, name="add_kardex"),
     path("add_venta/", views.add_venta, name="add_venta"),
     #edit
     path("index_categorias/display_marca/edit_marca/<int:id>/", views.edit_marca, name="edit_marca"),
@@ -32,7 +34,6 @@ urlpatterns = [
     path("index_categorias/display_formapago/edit_formapago/<int:id>/", views.edit_formapago, name="edit_formapago"),
     path("index_clientes/edit_cliente/<int:id>/", views.edit_cliente, name="edit_cliente"),
     path("index_autos/edit_auto/<int:id>/", views.edit_auto, name="edit_auto"),
-    path("index_kardex/edit_kardex/<int:id>/", views.edit_kardex, name="edit_kardex"),
     path("index_ventas/edit_venta/<int:id>/", views.edit_venta, name="edit_venta"),
     #delete
     path("index_categorias/display_marca/delete_marca/<int:id>/", views.delete_marca, name="delete_marca"),
@@ -41,6 +42,7 @@ urlpatterns = [
     path("index_categorias/display_formapago/delete_formapago/<int:id>/", views.delete_formapago, name="delete_formapago"),
     path("index_clientes/delete_cliente/<int:id>/", views.delete_clientes, name="delete_cliente"),
     path("index_autos/delete_auto/<int:id>/", views.delete_autos, name="delete_auto"),
-    path("index_kardex/delete_kardex/<int:id>/", views.delete_kardex, name="delete_kardex"),
+    path("index_kardex/display_kardexentradas/delete_kardexentradas/<int:id>/", views.delete_kardexentradas, name="delete_kardexentradas"),
+    path("index_kardex/display_kardexsalidas/delete_kardexsalidas/<int:id>/", views.delete_kardexsalidas, name="delete_kardexsalidas"),
     path("index_ventas/delete_venta/<int:id>/", views.delete_ventas, name="delete_venta"),
 ]

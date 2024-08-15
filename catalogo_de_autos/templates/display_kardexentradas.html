@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}KardexEntrada{% endblock %}
+{% block content %}
+    <h2>Entradas en Kardex</h2>
+    <a href="{% url 'catalogo_de_autos:index_kardex' %}" class="btn btn-secondary mb-3">Volver al Inicio del Kardex</a>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Codigo Auto</th>
+            <th scope="col">Fecha Recargo</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Valor Unitario</th>
+            <th scope="col">Valor total</th>
+            <th scope="col">Eliminar</th>
+          </tr>
+        </thead>
+              <tbody>
+                {% for kardexe in kardexse %}
+                    <tr>
+                        <td>{{ kardexe.auto }}</td>
+                        <td>{{ kardexe.fechacantidadentrada }}</td>
+                        <td>{{ kardexe.cantidaddeentrada }}</td>
+                        <td>{{ kardexe.valorunitarioentrada }}</td>
+                        <td>{{ kardexe.valortotalentrada }}</td>
+                        <td><a href="delete_kardexentradas/{{ kardexe.id }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>
+                    </tr>
+                  {% endfor %}
+              </tbody>
+      </table>
+{% endblock content %}

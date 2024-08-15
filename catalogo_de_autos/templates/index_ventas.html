@@ -3,39 +3,15 @@
 {% block content %}
     <h2>Ventas</h2>
     <a href="{% url 'catalogo_de_autos:index' %}" class="btn btn-secondary mb-3">Volver a Inicio</a>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Cliente</th>
-                <th>Auto</th>
-                <th>Fecha de Compra</th>
-                <th>Forma de Pago</th>
-                <th>Cantidad de Venta</th>
-                <th>Valor del Auto</th>
-                <th>IVA</th>
-                <th>Valor Total a Pagar</th>
-                <th>Código de Venta</th>
-                <th>Editar</th>
-                <th>Eliminar</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for venta in ventas %}
-                <tr>
-                    <td>{{ venta.cliente }}</td>
-                    <td>{{ venta.auto }}</td>
-                    <td>{{ venta.fechacompra }}</td>
-                    <td>{{ venta.formadepago }}</td>
-                    <td>{{ venta.cantidaddeventa }}</td>
-                    <td>{{ venta.valordelauto }}</td>
-                    <td>{{ venta.iva }}</td>
-                    <td>{{ venta.valortotalapagar }}</td>
-                    <td>{{ venta.codigoventa }}</td>
-                    <td><a href="edit_venta/{{ venta.id }}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                    <td><a href="delete_venta/{{ venta.id }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    {% for venta in ventas %}
+        <div class="card text-center">
+            <div class="card-body">
+            <h5 class="card-title">{{ venta }}</h5>
+            <a href="venta/{{ venta.id }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i></a>
+            <a href="edit_venta/{{ venta.id }}" class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></a> 
+            <a href="delete_venta/{{ venta.id }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a> 
+            </div>
+        </div>
+    {% endfor %}  
     <a href="{% url "catalogo_de_autos:add_venta" %}" class="btn btn-primary">Crear Nueva Venta</a>
 {% endblock %}
