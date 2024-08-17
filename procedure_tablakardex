@@ -149,4 +149,7 @@ $$ LANGUAGE plpgsql;
 --CALLS DE PROCESOS
 select * from catalogo_de_autos_auto
 CALL recargo_kardex ('FGV7534', ('12/08/2024'), 3)
-CALL salidas_kardex ('FGV7534', 'SUSUSUS')
+CALL salidas_kardex ('FGV7534', 'POAFNBD')
+
+CALL recargo_kardex ('INCMNSI', ('12/08/2024'), 3)
+CALL salidas_kardex ('INCMNSI', 'PAPSPDP')
