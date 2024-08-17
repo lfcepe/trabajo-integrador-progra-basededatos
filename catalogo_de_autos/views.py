@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import redirect, render, get_object_or_404
-from .models import Marca, ColorAuto, TipoCarro, FormaPago, Cliente, Auto, KardexEntradas, KardexSalidas, Venta
+from .models import Marca, ColorAuto, TipoCarro, FormaPago, Cliente, Auto, KardexEntradas, KardexSalidas, Venta, TotalCompras
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from .forms import Marca_Form, ColorAuto_Form, TipoCarro_Form, FormaPago_Form, Cliente_Form, Auto_Form, Venta_Form
@@ -66,6 +66,9 @@ def detalle_venta(request, venta_id):
     venta = get_object_or_404(Venta, pk=venta_id)
     return render(request, 'display_ventas.html', {'venta': venta})
 
+def index_ventastotales(request):
+    totales = TotalCompras.objects.all()
+    return render(request, 'index_ventastotales.html', {'totales': totales})
 
 #LOGIN VIEW
 class CustomLoginView(LoginView):
@@ -152,6 +155,8 @@ def add_venta(request):
         form = Venta_Form(request.POST,request.FILES)
         if form.is_valid():
             venta = form.save()
+            total_compras, created = TotalCompras.objects.get_or_create(cliente=venta.cliente)
+            total_compras.actualizar_total()
             return redirect('catalogo_de_autos:index_ventas')
     else:
         form = Venta_Form()
@@ -239,18 +244,6 @@ def edit_auto(request, id):
     return render(request, 'auto_form.html', {'form': form})
 
 
-@login_required
-def edit_venta(request, id):
-    venta = get_object_or_404(Venta, pk = id)
-    if request.method == 'POST':
-        form = Venta_Form(request.POST,request.FILES, instance=venta)
-        if form.is_valid():
-            form.save()
-            return redirect('catalogo_de_autos:index_ventas')
-    else:
-        form = Venta_Form(instance=venta)
-        
-    return render(request, 'venta_form.html', {'form': form})
 
 #DELETE ELEMENTS
 

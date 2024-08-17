@@ -1,17 +1,16 @@
 {% extends "base.html" %}
-{% block title %}Ventas{% endblock %}
+{% block title %}Carrito de compras{% endblock %}
 {% block content %}
-    <h2>Ventas</h2>
+    <h2>Carrito de compras</h2>
     <a href="{% url 'catalogo_de_autos:index' %}" class="btn btn-secondary mb-3">Volver a Inicio</a>
     {% for venta in ventas %}
         <div class="card text-center">
             <div class="card-body">
             <h5 class="card-title">{{ venta }}</h5>
             <a href="venta/{{ venta.id }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i></a>
-            <a href="edit_venta/{{ venta.id }}" class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></a> 
             <a href="delete_venta/{{ venta.id }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a> 
             </div>
         </div>
     {% endfor %}  
-    <a href="{% url "catalogo_de_autos:add_venta" %}" class="btn btn-primary">Crear Nueva Venta</a>
+    <a href="{% url "catalogo_de_autos:add_venta" %}" class="btn btn-primary">Crear Nueva Compra</a>
 {% endblock %}

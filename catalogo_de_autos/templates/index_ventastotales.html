@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Total{% endblock %}
+{% block content %}
+    <h2>Valor Total de las Venta</h2>
+    {% for total in totales %}
+    <div class="card">
+        <div class="card-body text-center">
+            <h5 class="card-title">Resumen de las compras</h5>
+            <p class="card-text">Factura N.{{ total.id }}</p>
+            <p class="card-text">Cliente: {{ total.cliente }}</p>
+            <p class="card-text">Total a pagar: ${{ total.total_compras }}</p>
+            <p class="card-text">Fecha: {{ total.fecha }}</p>         </a>
+        </div>
+    </div>
+    {% endfor %} 
+    <a href="{% url 'catalogo_de_autos:index' %}" class="btn btn-secondary mt-3">Volver al Inicio</a>
+{% endblock content %}

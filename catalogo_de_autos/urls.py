@@ -19,6 +19,7 @@ urlpatterns = [
     path("index_kardex/display_kardexsalidas/", views.display_kardexsalidas, name="display_kardexsalidas"),
     path("index_ventas/", views.index_ventas, name="index_ventas"),
     path("index_ventas/venta/<int:venta_id>/", views.detalle_venta, name="display_ventas" ),
+    path("index_ventastotales/", views.index_ventastotales, name='index_ventastotales'),
     #form
     path("add_marca/", views.add_marca, name = "add_marca"),
     path("add_colorauto/", views.add_colorauto, name="add_colorauto"),
@@ -34,7 +35,6 @@ urlpatterns = [
     path("index_categorias/display_formapago/edit_formapago/<int:id>/", views.edit_formapago, name="edit_formapago"),
     path("index_clientes/edit_cliente/<int:id>/", views.edit_cliente, name="edit_cliente"),
     path("index_autos/edit_auto/<int:id>/", views.edit_auto, name="edit_auto"),
-    path("index_ventas/edit_venta/<int:id>/", views.edit_venta, name="edit_venta"),
     #delete
     path("index_categorias/display_marca/delete_marca/<int:id>/", views.delete_marca, name="delete_marca"),
     path("index_categorias/display_colorauto/delete_colorauto/<int:id>/", views.delete_colorauto, name="delete_colorauto"),

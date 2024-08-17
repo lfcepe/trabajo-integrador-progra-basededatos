@@ -57,7 +57,7 @@ class Auto_Form(forms.ModelForm):
 class Venta_Form (forms.ModelForm):
     class Meta:
         model = Venta
-        fields = ['cliente', 'auto', 'fechacompra', 'formadepago', 'cantidaddeventa', 'iva', 'valoriva', 'codigoventa']
+        fields = ['cliente', 'auto', 'formadepago', 'cantidaddeventa', 'iva', 'valoriva', 'codigoventa']
         witgets = {
             'fechacompra': forms.DateInput(attrs={'class': 'form-control', 'id': 'datepicker'}),
         }

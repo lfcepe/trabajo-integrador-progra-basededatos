@@ -151,3 +151,14 @@ class Venta(models.Model):
         if not self.valortotalapagar:
             self.calcular_costo_final()
         super().save(*args, **kwargs)
+
+
+class TotalCompras(models.Model):
+    cliente = models.OneToOneField(Cliente, on_delete=models.CASCADE)
+    total_compras = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
+    fecha = models.DateField(auto_now=True)
+
+    def actualizar_total(self):
+        total = Venta.objects.filter(cliente=self.cliente).aggregate(total=models.Sum('valortotalapagar'))['total'] or 0.00
+        self.total_compras = total
+        self.save()
