@@ -81,8 +81,8 @@ DATABASES = {
         'NAME': 'catalogo_autos',
         'HOST': 'localhost',
         'PORT': '5432',
-        'USER': 'felipecepeda',
-        'PASSWORD': 'Ale+dra123'
+        'USER': 'josuetb',
+        'PASSWORD': '1753'
    }
 }
 
